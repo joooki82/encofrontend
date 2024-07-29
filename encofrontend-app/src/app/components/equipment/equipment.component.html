@@ -1,1 +1,19 @@
-<p>equipment works!</p>
+<div class="container mt-4">
+  <h2>Equipment List</h2>
+  <div *ngIf="equipmentList.length > 0; else noData">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let equipment of equipmentList">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ equipment.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ equipment.identifier }}</h6>
+            <p class="card-text">{{ equipment.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noData>
+    <p>No equipment available.</p>
+  </ng-template>
+</div>
