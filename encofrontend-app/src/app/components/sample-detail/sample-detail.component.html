@@ -1,0 +1,171 @@
+<div class="container mt-4">
+  <div class="row">
+    <!-- Sample Detail List Column -->
+    <div class="col-md-8">
+      <h2 class="text-primary">Sample Detail List</h2>
+      <div *ngIf="sampleDetailList.length > 0; else noData">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered shadow-sm rounded">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">Series Number</th>
+              <th scope="col">Topic Number</th>
+              <th scope="col">Unique Sample Number</th>
+              <th scope="col">Inside Sampling Location</th>
+              <th scope="col">Contaminant ID</th>
+              <th scope="col">Worker Examined</th>
+              <th scope="col">Environmental Conditions</th>
+              <th scope="col">Sample Volume Flow Rate</th>
+              <th scope="col">Adjustment Method ID</th>
+              <th scope="col">Start Time</th>
+              <th scope="col">End Time</th>
+              <th scope="col">Sampling Type ID</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let sampleDetail of sampleDetailList">
+              <td>{{ sampleDetail.seriesNumber }}</td>
+              <td>{{ sampleDetail.topicNumber }}</td>
+              <td>{{ sampleDetail.uniqueSampleNumber }}</td>
+              <td>{{ sampleDetail.insideSamplingLocation }}</td>
+              <td>{{ sampleDetail.contaminantId }}</td>
+              <td>{{ sampleDetail.workerExamined }}</td>
+              <td>{{ sampleDetail.environmentalConditions }}</td>
+              <td>{{ sampleDetail.sampleVolumeFlowRate }}</td>
+              <td>{{ sampleDetail.adjustmentMethodId }}</td>
+              <td>{{ sampleDetail.startTime }}</td>
+              <td>{{ sampleDetail.endTime }}</td>
+              <td>{{ sampleDetail.samplingTypeId }}</td>
+              <td>
+                <button (click)="onDelete(sampleDetail.detailId)" class="btn btn-danger btn-sm">
+                  <i class="bi bi-trash"></i> Delete
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <ng-template #noData>
+        <p class="text-muted">No sample details available.</p>
+      </ng-template>
+    </div>
+
+    <!-- New Sample Detail Form Column -->
+    <div class="col-md-4">
+      <h2 class="text-primary">Add New Sample Detail</h2>
+      <form [formGroup]="sampleDetailForm" (ngSubmit)="onSubmit()" class="bg-light p-4 rounded shadow-sm">
+        <div class="form-group">
+          <label for="seriesNumber" class="font-weight-bold">Series Number</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-hash"></i></span>
+            </div>
+            <input id="seriesNumber" formControlName="seriesNumber" class="form-control" placeholder="Enter series number">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="topicNumber" class="font-weight-bold">Topic Number</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+            </div>
+            <input id="topicNumber" formControlName="topicNumber" class="form-control" placeholder="Enter topic number">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="uniqueSampleNumber" class="font-weight-bold">Unique Sample Number</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-fingerprint"></i></span>
+            </div>
+            <input id="uniqueSampleNumber" formControlName="uniqueSampleNumber" class="form-control" placeholder="Enter unique sample number">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="insideSamplingLocation" class="font-weight-bold">Inside Sampling Location</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+            </div>
+            <input id="insideSamplingLocation" formControlName="insideSamplingLocation" class="form-control" placeholder="Enter inside sampling location">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contaminantId" class="font-weight-bold">Contaminant ID</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-bug"></i></span>
+            </div>
+            <input id="contaminantId" formControlName="contaminantId" class="form-control" placeholder="Enter contaminant ID">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="workerExamined" class="font-weight-bold">Worker Examined</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+            </div>
+            <input id="workerExamined" formControlName="workerExamined" class="form-control" placeholder="Enter worker examined">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="environmentalConditions" class="font-weight-bold">Environmental Conditions</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-cloud"></i></span>
+            </div>
+            <input id="environmentalConditions" formControlName="environmentalConditions" class="form-control" placeholder="Enter environmental conditions">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="sampleVolumeFlowRate" class="font-weight-bold">Sample Volume Flow Rate</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-speedometer"></i></span>
+            </div>
+            <input id="sampleVolumeFlowRate" formControlName="sampleVolumeFlowRate" class="form-control" placeholder="Enter sample volume flow rate">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="adjustmentMethodId" class="font-weight-bold">Adjustment Method ID</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-wrench"></i></span>
+            </div>
+            <input id="adjustmentMethodId" formControlName="adjustmentMethodId" class="form-control" placeholder="Enter adjustment method ID">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="startTime" class="font-weight-bold">Start Time</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-clock"></i></span>
+            </div>
+            <input id="startTime" formControlName="startTime" class="form-control" placeholder="Enter start time">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="endTime" class="font-weight-bold">End Time</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-clock"></i></span>
+            </div>
+            <input id="endTime" formControlName="endTime" class="form-control" placeholder="Enter end time">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="samplingTypeId" class="font-weight-bold">Sampling Type ID</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="bi bi-type"></i></span>
+            </div>
+            <input id="samplingTypeId" formControlName="samplingTypeId" class="form-control" placeholder="Enter sampling type ID">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Add Sample Detail</button>
+      </form>
+    </div>
+  </div>
+</div>
