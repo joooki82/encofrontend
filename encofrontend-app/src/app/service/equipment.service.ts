@@ -8,11 +8,20 @@ import {Equipment} from "../model/equipment/equipment.model";
   providedIn: 'root'
 })
 export class EquipmentService {
-  private apiUrl = 'http://localhost:8080/api/equipment';
+  private apiUrl = 'http://localhost:8080/api/equipments';
 
   constructor(private http: HttpClient) {}
 
   getAllEquipment(): Observable<Equipment[]> {
     return this.http.get<Equipment[]>(this.apiUrl);
   }
+
+  saveEquipment(equipment: Equipment): Observable<Equipment> {
+    return this.http.post<Equipment>(this.apiUrl, equipment);
+  }
+
+  deleteEquipment(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }
