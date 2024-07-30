@@ -3,7 +3,7 @@ import {Equipment} from "../../model/equipment/equipment.model";
 import {EquipmentService} from "../../service/equipment.service";
 import {CommonModule} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+
 
 
 @Component({
