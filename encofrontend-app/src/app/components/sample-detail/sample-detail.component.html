@@ -515,16 +515,16 @@
               <th scope="col">Topic Number</th>
               <th scope="col">Unique Sample Number</th>
               <th scope="col">Inside Sampling Location</th>
-              <th scope="col">Contaminant ID</th>
+              <th scope="col">Contaminants</th>
               <th scope="col">Worker Examined</th>
               <th scope="col">Temperature</th>
               <th scope="col">Humidity</th>
               <th scope="col">Pressure</th>
               <th scope="col">Sample Volume Flow Rate</th>
-              <th scope="col">Adjustment Method ID</th>
+              <th scope="col">Adjustment Method</th>
               <th scope="col">Start Time</th>
               <th scope="col">End Time</th>
-              <th scope="col">Sampling Type ID</th>
+              <th scope="col">Sampling Type</th>
               <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -534,16 +534,22 @@
               <td>{{ sampleDetail.topicNumber }}</td>
               <td>{{ sampleDetail.uniqueSampleNumber }}</td>
               <td>{{ sampleDetail.insideSamplingLocation }}</td>
-              <td>{{ sampleDetail.contaminantId }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let contaminant of sampleDetail.contaminants">
+                    {{ contaminant.name }}
+                  </li>
+                </ul>
+              </td>
               <td>{{ sampleDetail.workerExamined }}</td>
-              <td>{{ sampleDetail.temperature }}</td>
-              <td>{{ sampleDetail.humidity }}</td>
-              <td>{{ sampleDetail.pressure }}</td>
+              <td>{{ sampleDetail.temperature }} °C</td>
+              <td>{{ sampleDetail.humidity }} %</td>
+              <td>{{ sampleDetail.pressure }} hPa</td>
               <td>{{ sampleDetail.sampleVolumeFlowRate }}</td>
-              <td>{{ sampleDetail.adjustmentMethodId }}</td>
-              <td>{{ sampleDetail.startTime }}</td>
-              <td>{{ sampleDetail.endTime }}</td>
-              <td>{{ sampleDetail.samplingTypeId }}</td>
+              <td>{{ sampleDetail.adjustmentMethod.code }} - {{ sampleDetail.adjustmentMethod.description }}</td>
+              <td>{{ sampleDetail.startTime | date:'short' }}</td>
+              <td>{{ sampleDetail.endTime | date:'short' }}</td>
+              <td>{{ sampleDetail.samplingType.code }} - {{ sampleDetail.samplingType.description }}</td>
               <td>
                 <button (click)="onDelete(sampleDetail.detailId)" class="btn btn-danger btn-sm">
                   <i class="bi bi-trash"></i> Delete
@@ -558,6 +564,7 @@
         <p class="text-muted">No sample details available.</p>
       </ng-template>
     </div>
+
 
     <!-- New Sample Detail Form Column -->
     <div class="col-md-4">
@@ -588,10 +595,18 @@
           </mat-form-field>
         </div>
         <div class="form-group">
-          <mat-form-field appearance="fill">
-            <mat-label>Contaminant ID</mat-label>
-            <input matInput formControlName="contaminantId" />
-          </mat-form-field>
+          <mat-label>Contaminant IDs</mat-label>
+          <div formArrayName="contaminantIds">
+            <div *ngFor="let contaminant of contaminantIds.controls; let i=index">
+              <mat-form-field appearance="fill">
+                <input matInput [formControlName]="i" placeholder="Contaminant ID" />
+              </mat-form-field>
+              <button type="button" mat-icon-button (click)="removeContaminant(i)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </div>
+            <button type="button" mat-button (click)="addContaminant()">Add Contaminant</button>
+          </div>
         </div>
         <div class="form-group">
           <mat-form-field appearance="fill">
