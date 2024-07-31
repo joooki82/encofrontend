@@ -1,3 +1,5 @@
+import { Decimal } from 'decimal.js';
+
 export interface SampleDetail {
   detailId: number;
   seriesNumber: string;
@@ -6,10 +8,12 @@ export interface SampleDetail {
   insideSamplingLocation: string;
   contaminantId: number;
   workerExamined: string;
-  environmentalConditions: string;
+  temperature: Decimal;
+  humidity: Decimal;
+  pressure: Decimal;
   sampleVolumeFlowRate: string;
   adjustmentMethodId: number;
-  startTime: string; // Using string for time representation
-  endTime: string; // Using string for time representation
+  startTime: Date;
+  endTime: Date;
   samplingTypeId: number;
 }

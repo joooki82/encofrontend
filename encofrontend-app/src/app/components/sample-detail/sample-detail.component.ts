@@ -1,14 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import {SampleDetail} from "../../model/sample-detail/sample-detail.model";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SampleDetailService} from "../../service/sample-detail.service";
 import {CommonModule} from "@angular/common";
+import moment, {now} from 'moment';
+import { MatFormFieldModule} from "@angular/material/form-field";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
+
 
 @Component({
   selector: 'app-sample-detail',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule
+    CommonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatMomentDateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatMomentDateModule,
+    NgxMatDatetimePickerModule,
   ],
   templateUrl: './sample-detail.component.html',
   styleUrl: './sample-detail.component.css'
@@ -16,6 +37,7 @@ import {CommonModule} from "@angular/common";
 export class SampleDetailComponent implements OnInit {
   sampleDetailList: SampleDetail[] = [];
   sampleDetailForm: FormGroup;
+
 
   constructor(
     private fb: FormBuilder,
@@ -28,17 +50,19 @@ export class SampleDetailComponent implements OnInit {
       insideSamplingLocation: ['', Validators.required],
       contaminantId: ['', Validators.required],
       workerExamined: ['', Validators.required],
-      environmentalConditions: ['', Validators.required],
+      temperature: ['', Validators.required],
+      humidity: ['', Validators.required],
+      pressure: ['', Validators.required],
       sampleVolumeFlowRate: ['', Validators.required],
       adjustmentMethodId: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
+      startTime: [now(), Validators.required],
+      endTime: [now(), Validators.required],
       samplingTypeId: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.loadSampleDetails();
+    this.loadSampleDetails()
   }
 
   loadSampleDetails() {
@@ -49,11 +73,16 @@ export class SampleDetailComponent implements OnInit {
 
   onSubmit() {
     if (this.sampleDetailForm.valid) {
-      const newSampleDetail: SampleDetail = this.sampleDetailForm.value;
+      const newSampleDetail: SampleDetail = {
+        ...this.sampleDetailForm.value,
+        // startTime: moment(this.sampleDetailForm.value.startTime).toDate(),
+        // endTime: moment(this.sampleDetailForm.value.endTime).toDate()
+      };
       this.sampleDetailService.saveSampleDetail(newSampleDetail).subscribe(response => {
         this.sampleDetailList.push(response);
         this.sampleDetailForm.reset();
       });
+      console.log(this.sampleDetailForm.value)
     }
   }
 
