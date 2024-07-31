@@ -2,3 +2,44 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Styles to fix the date and time picker visibility */
+.mat-calendar {
+  background-color: white;
+  color: black;
+}
+
+.mat-calendar-body {
+  background-color: white;
+  color: black;
+}
+
+.mat-calendar-body-cell {
+  background-color: white;
+  color: black;
+}
+
+.mat-calendar-body-cell-content {
+  background-color: white;
+  color: black;
+}
+
+.mat-calendar-period-button,
+.mat-calendar-previous-button,
+.mat-calendar-next-button {
+  color: black;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: white;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-infix {
+  border-color: rgba(0, 0, 0, 0.42);
+}
+
+/* Ensure input fields are not transparent */
+.mat-input-element {
+  background-color: white;
+  color: black;
+}

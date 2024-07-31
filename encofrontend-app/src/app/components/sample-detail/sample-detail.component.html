@@ -342,6 +342,165 @@
 <!--  </div>-->
 <!--</div>-->
 
+<!--<div class="container mt-4">-->
+<!--  <div class="row">-->
+<!--    &lt;!&ndash; Sample Detail List Column &ndash;&gt;-->
+<!--    <div class="col-md-8">-->
+<!--      <h2 class="text-primary">Sample Detail List</h2>-->
+<!--      <div *ngIf="sampleDetailList.length > 0; else noData">-->
+<!--        <div class="table-responsive">-->
+<!--          <table class="table table-hover table-striped table-bordered shadow-sm rounded">-->
+<!--            <thead class="thead-dark">-->
+<!--            <tr>-->
+<!--              <th scope="col">Series Number</th>-->
+<!--              <th scope="col">Topic Number</th>-->
+<!--              <th scope="col">Unique Sample Number</th>-->
+<!--              <th scope="col">Inside Sampling Location</th>-->
+<!--              <th scope="col">Contaminant ID</th>-->
+<!--              <th scope="col">Worker Examined</th>-->
+<!--              <th scope="col">Temperature</th>-->
+<!--              <th scope="col">Humidity</th>-->
+<!--              <th scope="col">Pressure</th>-->
+<!--              <th scope="col">Sample Volume Flow Rate</th>-->
+<!--              <th scope="col">Adjustment Method ID</th>-->
+<!--              <th scope="col">Start Time</th>-->
+<!--              <th scope="col">End Time</th>-->
+<!--              <th scope="col">Sampling Type ID</th>-->
+<!--              <th scope="col">Actions</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr *ngFor="let sampleDetail of sampleDetailList">-->
+<!--              <td>{{ sampleDetail.seriesNumber }}</td>-->
+<!--              <td>{{ sampleDetail.topicNumber }}</td>-->
+<!--              <td>{{ sampleDetail.uniqueSampleNumber }}</td>-->
+<!--              <td>{{ sampleDetail.insideSamplingLocation }}</td>-->
+<!--              <td>{{ sampleDetail.contaminantId }}</td>-->
+<!--              <td>{{ sampleDetail.workerExamined }}</td>-->
+<!--              <td>{{ sampleDetail.temperature }}</td>-->
+<!--              <td>{{ sampleDetail.humidity }}</td>-->
+<!--              <td>{{ sampleDetail.pressure }}</td>-->
+<!--              <td>{{ sampleDetail.sampleVolumeFlowRate }}</td>-->
+<!--              <td>{{ sampleDetail.adjustmentMethodId }}</td>-->
+<!--              <td>{{ sampleDetail.startTime  }}</td>-->
+<!--              <td>{{ sampleDetail.endTime  }}</td>-->
+<!--              <td>{{ sampleDetail.samplingTypeId }}</td>-->
+<!--              <td>-->
+<!--                <button (click)="onDelete(sampleDetail.detailId)" class="btn btn-danger btn-sm">-->
+<!--                  <i class="bi bi-trash"></i> Delete-->
+<!--                </button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <ng-template #noData>-->
+<!--        <p class="text-muted">No sample details available.</p>-->
+<!--      </ng-template>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; New Sample Detail Form Column &ndash;&gt;-->
+<!--    <div class="col-md-4">-->
+<!--      <h2 class="text-primary">Add New Sample Detail</h2>-->
+<!--      <form [formGroup]="sampleDetailForm" (ngSubmit)="onSubmit()">-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Series Number</mat-label>-->
+<!--            <input matInput formControlName="seriesNumber"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Topic Number</mat-label>-->
+<!--            <input matInput formControlName="topicNumber"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Unique Sample Number</mat-label>-->
+<!--            <input matInput formControlName="uniqueSampleNumber"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Inside Sampling Location</mat-label>-->
+<!--            <input matInput formControlName="insideSamplingLocation"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Contaminant ID</mat-label>-->
+<!--            <input matInput formControlName="contaminantId"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Worker Examined</mat-label>-->
+<!--            <input matInput formControlName="workerExamined"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Temperature</mat-label>-->
+<!--            <input matInput formControlName="temperature" type="number"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Humidity</mat-label>-->
+<!--            <input matInput formControlName="humidity" type="number"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Pressure</mat-label>-->
+<!--            <input matInput formControlName="pressure" type="number"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Sample Volume Flow Rate</mat-label>-->
+<!--            <input matInput formControlName="sampleVolumeFlowRate"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Adjustment Method ID</mat-label>-->
+<!--            <input matInput formControlName="adjustmentMethodId"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Start Time</mat-label>-->
+<!--            <input matInput [ngxMatDatetimePicker]="startDatePicker" formControlName="startTime"-->
+<!--                   placeholder="Choose a date and time">-->
+<!--            <ngx-mat-datepicker-toggle matSuffix [for]="startDatePicker"></ngx-mat-datepicker-toggle>-->
+<!--            <ngx-mat-datetime-picker #startDatePicker></ngx-mat-datetime-picker>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>End Time</mat-label>-->
+<!--            <input matInput [ngxMatDatetimePicker]="endDatePicker" formControlName="endTime" placeholder="Choose a date and time">-->
+<!--            <ngx-mat-datepicker-toggle matSuffix [for]="endDatePicker"></ngx-mat-datepicker-toggle>-->
+<!--            <ngx-mat-datetime-picker #endDatePicker></ngx-mat-datetime-picker>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Sampling Type ID</mat-label>-->
+<!--            <input matInput formControlName="samplingTypeId" />-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-primary">Save</button>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
 <div class="container mt-4">
   <div class="row">
     <!-- Sample Detail List Column -->
@@ -382,8 +541,8 @@
               <td>{{ sampleDetail.pressure }}</td>
               <td>{{ sampleDetail.sampleVolumeFlowRate }}</td>
               <td>{{ sampleDetail.adjustmentMethodId }}</td>
-              <td>{{ sampleDetail.startTime | date:'short' }}</td>
-              <td>{{ sampleDetail.endTime | date:'short' }}</td>
+              <td>{{ sampleDetail.startTime }}</td>
+              <td>{{ sampleDetail.endTime }}</td>
               <td>{{ sampleDetail.samplingTypeId }}</td>
               <td>
                 <button (click)="onDelete(sampleDetail.detailId)" class="btn btn-danger btn-sm">
@@ -468,6 +627,22 @@
           <mat-form-field appearance="fill">
             <mat-label>Adjustment Method ID</mat-label>
             <input matInput formControlName="adjustmentMethodId" />
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Start Time</mat-label>
+            <input matInput [ngxMatDatetimePicker]="startDatePicker" formControlName="startTime" placeholder="Choose a date and time">
+            <ngx-mat-datepicker-toggle matSuffix [for]="startDatePicker"></ngx-mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #startDatePicker></ngx-mat-datetime-picker>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>End Time</mat-label>
+            <input matInput [ngxMatDatetimePicker]="endDatePicker" formControlName="endTime" placeholder="Choose a date and time">
+            <ngx-mat-datepicker-toggle matSuffix [for]="endDatePicker"></ngx-mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #endDatePicker></ngx-mat-datetime-picker>
           </mat-form-field>
         </div>
         <div class="form-group">
