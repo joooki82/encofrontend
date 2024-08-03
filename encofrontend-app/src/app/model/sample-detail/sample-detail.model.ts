@@ -1,9 +1,5 @@
 import { Decimal } from 'decimal.js';
-
-export interface Contaminant {
-  id: number;
-  name: string;
-}
+import {Contaminant} from "../contaminant/contaminant.model";
 
 export interface AdjustmentMethod {
   id: number;

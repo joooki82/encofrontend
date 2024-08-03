@@ -1,0 +1,165 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">MINTÁK ADATAI</h2>
+
+  <div *ngFor="let record of samplingRecords" class="mb-5">
+    <table class="table table-bordered">
+      <tbody>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Dátum:</td>
+        <td colspan="2">{{ record.sampleDate }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Mérést végezte:</td>
+        <td colspan="2">{{ record.conductedBy.firstName }} {{ record.conductedBy.lastName }}</td>
+      </tr>
+      <tr>
+        <th>Vizsgált szennyezők</th>
+        <td>
+          <ul>
+            <li *ngFor="let contaminant of record.contaminants">{{ contaminant.name }}</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="2" class="font-weight-bold">Telephely:</td>
+        <td colspan="2" class="font-weight-bold">Név</td>
+        <td colspan="2">{{ record.location.name }}</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="font-weight-bold">Cím</td>
+        <td colspan="2">{{ record.location.streetName }} {{ record.location.streetNumber }}, {{ record.location.city }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="border-top border-bottom"></td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Vizsgált üzem:</td>
+        <td colspan="2">{{ record.testedPlant }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Szennyező technológia:</td>
+        <td colspan="2">{{ record.technology }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Műszakok száma, ideje:</td>
+        <td colspan="2">{{ record.numShiftsShiftDuration }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Dolgozók száma/műszak:</td>
+        <td colspan="2">{{ record.numWorkersPerShift }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Expozíciós idő:</td>
+        <td colspan="2">{{ record.exposureDuration }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="border-top border-bottom"></td>
+      </tr>
+      <tr>
+        <td rowspan="5" class="font-weight-bold">Környezet:</td>
+        <td colspan="2" class="font-weight-bold">Hőmérséklet</td>
+        <td colspan="2">{{ record.temperature }}</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="font-weight-bold">Páratartalom</td>
+        <td colspan="2">{{ record.humidity }}</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="font-weight-bold">Szél</td>
+        <td colspan="2">{{ record.wind }}</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="font-weight-bold">Légnyomás</td>
+        <td colspan="2">{{ record.pressure1 }} / {{ record.pressure2 }}</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="font-weight-bold">Egyéb</td>
+        <td colspan="2">{{ record.otherEnvironmentalConditions }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Légáramlási viszonyok:</td>
+        <td colspan="2">{{ record.airFlowConditions }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Működési mód:</td>
+        <td colspan="2">{{ record.operationMode }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Működési szünet:</td>
+        <td colspan="2">{{ record.operationBreak }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="font-weight-bold">Helyi elszívás:</td>
+        <td colspan="2">{{ record.localAirExtraction }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="font-weight-bold">Eszközök:</td>
+      </tr>
+      <tr *ngFor="let equipment of record.equipmentList">
+        <td colspan="5">{{ equipment.name }} - {{ equipment.description }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="font-weight-bold">Minta részletek:</td>
+      </tr>
+      <div class="container mt-5">
+        <h2 class="mb-4">Sampling Records</h2>
+        <!-- Iterate over each sampling record -->
+        <div *ngFor="let record of samplingRecords; let rIndex = index">
+          <h3 class="mb-3">Record {{ rIndex + 1 }} Details</h3>
+          <div *ngIf="record.sampleDetailList.length > 0">
+            <h4>Sample Details</h4>
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Serial Number</th>
+                <th>Employee</th>
+                <th>Contaminants</th>
+                <th>Temperature (°C)</th>
+                <th>Humidity (%)</th>
+                <th>Pressure (hPa)</th>
+                <th>Flow Rate (L/min)</th>
+                <th>Adjustment Method</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Sampling Type</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let detail of record.sampleDetailList">
+                <td>{{ detail.seriesNumber }}</td>
+                <td>{{ detail.workerExamined }}</td>
+                <td>
+                  <ul>
+                    <li *ngFor="let contaminant of detail.contaminants">{{ contaminant.name }}</li>
+                  </ul>
+                </td>
+                <td>{{ detail.temperature }}</td>
+                <td>{{ detail.humidity }}</td>
+                <td>{{ detail.pressure }}</td>
+                <td>{{ detail.sampleVolumeFlowRate }}</td>
+                <td>{{ detail.adjustmentMethod.description }}</td>
+                <td>{{ detail.startTime | date:'short' }}</td>
+                <td>{{ detail.endTime | date:'short' }}</td>
+                <td>{{ detail.samplingType.description }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <tr>
+        <td colspan="5" class="font-weight-bold">Készítette: {{ record.createdBy.firstName }} {{ record.createdBy.lastName }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="font-weight-bold">Utoljára módosította: {{ record.updatedBy?.firstName || 'N/A' }} {{ record.updatedBy?.lastName || '' }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="font-weight-bold">Létrehozva: {{ record.createdAt }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="font-weight-bold">Frissítve: {{ record.updatedAt || 'N/A' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

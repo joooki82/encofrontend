@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Location} from "../../model/location/location.model";
 import {LocationService} from "../../service/location.service";
 import {CommonModule} from "@angular/common";
+import {LocationOfSampling} from "../../model/locationofsampling/locationofsampling.model";
 
 @Component({
   selector: 'app-location',
@@ -14,7 +14,7 @@ import {CommonModule} from "@angular/common";
   styleUrl: './location.component.css'
 })
 export class LocationComponent implements OnInit {
-  locationList: Location[] = [];
+  locationList: LocationOfSampling[] = [];
   locationForm: FormGroup;
 
   constructor(
@@ -43,7 +43,7 @@ export class LocationComponent implements OnInit {
 
   onSubmit() {
     if (this.locationForm.valid) {
-      const newLocation: Location = this.locationForm.value;
+      const newLocation: LocationOfSampling = this.locationForm.value;
       this.locationService.saveLocation(newLocation).subscribe(response => {
         this.locationList.push(response);
         this.locationForm.reset();

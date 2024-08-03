@@ -1,4 +1,4 @@
-export interface Location {
+export interface LocationOfSampling {
   locationId: number;
   name: string;
   zipCode: string;
