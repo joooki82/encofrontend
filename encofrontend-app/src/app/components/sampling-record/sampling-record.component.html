@@ -97,19 +97,17 @@
             <td colspan="2">{{ samplingRecord.localAirExtraction }}</td>
           </tr>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold text-secondary">Eszközök:</td>
+            <td colspan="5" class="font-weight-bold ">Eszközök:</td>
           </tr>
           <tr *ngFor="let equipment of samplingRecord.equipmentList" class="bg-light">
             <td colspan="5">{{ equipment.name }} - {{ equipment.description }}</td>
           </tr>
           <tr>
-            <td colspan="5" class="font-weight-bold text-secondary">Minta részletek:</td>
+            <td colspan="5" class="font-weight-bold ">Minta részletek:</td>
           </tr>
           </tbody>
         </table>
-
         <div class="container mt-4">
-          <h4 class="text-secondary">Sample Details</h4>
           <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
