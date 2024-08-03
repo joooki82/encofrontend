@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <h2 class="mb-4 text-center text-primary">MINTÁK ADATAI</h2>
-  <div *ngFor="let record of samplingRecords" class="mb-5">
+  <div *ngIf="samplingRecord" class="mb-5">
     <div class="card shadow-sm">
       <div class="card-header bg-primary text-white font-weight-bold">
         Sampling Record Details
@@ -10,51 +10,51 @@
           <tbody>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Dátum:</td>
-            <td colspan="2">{{ record.sampleDate }}</td>
+            <td colspan="2">{{ samplingRecord.sampleDate }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Mérést végezte:</td>
-            <td colspan="2">{{ record.conductedBy.firstName }} {{ record.conductedBy.lastName }}</td>
+            <td colspan="2">{{ samplingRecord.conductedBy.firstName }} {{ samplingRecord.conductedBy.lastName }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Vizsgált szennyezők</td>
             <td colspan="2">
               <ul class="list-unstyled">
-                <li *ngFor="let contaminant of record.contaminants">{{ contaminant.name }}</li>
+                <li *ngFor="let contaminant of samplingRecord.contaminants">{{ contaminant.name }}</li>
               </ul>
             </td>
           </tr>
           <tr class="bg-light">
             <td rowspan="2" class="font-weight-bold">Telephely:</td>
             <td colspan="2" class="font-weight-bold">Név</td>
-            <td colspan="2">{{ record.location.name }}</td>
+            <td colspan="2">{{ samplingRecord.location.name }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="2" class="font-weight-bold">Cím</td>
-            <td colspan="2">{{ record.location.streetName }} {{ record.location.streetNumber }}, {{ record.location.city }}</td>
+            <td colspan="2">{{ samplingRecord.location.streetName }} {{ samplingRecord.location.streetNumber }}, {{ samplingRecord.location.city }}</td>
           </tr>
           <tr>
             <td colspan="5" class="border-top border-bottom"></td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Vizsgált üzem:</td>
-            <td colspan="2">{{ record.testedPlant }}</td>
+            <td colspan="2">{{ samplingRecord.testedPlant }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Szennyező technológia:</td>
-            <td colspan="2">{{ record.technology }}</td>
+            <td colspan="2">{{ samplingRecord.technology }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Műszakok száma, ideje:</td>
-            <td colspan="2">{{ record.numShiftsShiftDuration }}</td>
+            <td colspan="2">{{ samplingRecord.numShiftsShiftDuration }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Dolgozók száma/műszak:</td>
-            <td colspan="2">{{ record.numWorkersPerShift }}</td>
+            <td colspan="2">{{ samplingRecord.numWorkersPerShift }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Expozíciós idő:</td>
-            <td colspan="2">{{ record.exposureDuration }}</td>
+            <td colspan="2">{{ samplingRecord.exposureDuration }}</td>
           </tr>
           <tr>
             <td colspan="5" class="border-top border-bottom"></td>
@@ -62,44 +62,44 @@
           <tr class="bg-light">
             <td rowspan="5" class="font-weight-bold">Környezet:</td>
             <td colspan="2" class="font-weight-bold">Hőmérséklet</td>
-            <td colspan="2">{{ record.temperature }}</td>
+            <td colspan="2">{{ samplingRecord.temperature }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="2" class="font-weight-bold">Páratartalom</td>
-            <td colspan="2">{{ record.humidity }}</td>
+            <td colspan="2">{{ samplingRecord.humidity }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="2" class="font-weight-bold">Szél</td>
-            <td colspan="2">{{ record.wind }}</td>
+            <td colspan="2">{{ samplingRecord.wind }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="2" class="font-weight-bold">Légnyomás</td>
-            <td colspan="2">{{ record.pressure1 }} / {{ record.pressure2 }}</td>
+            <td colspan="2">{{ samplingRecord.pressure1 }} / {{ samplingRecord.pressure2 }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="2" class="font-weight-bold">Egyéb</td>
-            <td colspan="2">{{ record.otherEnvironmentalConditions }}</td>
+            <td colspan="2">{{ samplingRecord.otherEnvironmentalConditions }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Légáramlási viszonyok:</td>
-            <td colspan="2">{{ record.airFlowConditions }}</td>
+            <td colspan="2">{{ samplingRecord.airFlowConditions }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Működési mód:</td>
-            <td colspan="2">{{ record.operationMode }}</td>
+            <td colspan="2">{{ samplingRecord.operationMode }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Működési szünet:</td>
-            <td colspan="2">{{ record.operationBreak }}</td>
+            <td colspan="2">{{ samplingRecord.operationBreak }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="3" class="font-weight-bold">Helyi elszívás:</td>
-            <td colspan="2">{{ record.localAirExtraction }}</td>
+            <td colspan="2">{{ samplingRecord.localAirExtraction }}</td>
           </tr>
           <tr class="bg-light">
             <td colspan="5" class="font-weight-bold text-secondary">Eszközök:</td>
           </tr>
-          <tr *ngFor="let equipment of record.equipmentList" class="bg-light">
+          <tr *ngFor="let equipment of samplingRecord.equipmentList" class="bg-light">
             <td colspan="5">{{ equipment.name }} - {{ equipment.description }}</td>
           </tr>
           <tr>
@@ -127,7 +127,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let detail of record.sampleDetailList">
+            <tr *ngFor="let detail of samplingRecord.sampleDetailList">
               <td>{{ detail.seriesNumber }}</td>
               <td>{{ detail.workerExamined }}</td>
               <td>
@@ -151,20 +151,23 @@
         <table class="table table-bordered mt-4">
           <tbody>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Készítette: {{ record.createdBy.firstName }} {{ record.createdBy.lastName }}</td>
+            <td colspan="5" class="font-weight-bold">Készítette: {{ samplingRecord.createdBy.firstName }} {{ samplingRecord.createdBy.lastName }}</td>
           </tr>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Utoljára módosította: {{ record.updatedBy?.firstName || 'N/A' }} {{ record.updatedBy?.lastName || '' }}</td>
+            <td colspan="5" class="font-weight-bold">Utoljára módosította: {{ samplingRecord.updatedBy?.firstName || 'N/A' }} {{ samplingRecord.updatedBy?.lastName || '' }}</td>
           </tr>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Létrehozva: {{ record.createdAt | date:'medium' }}</td>
+            <td colspan="5" class="font-weight-bold">Létrehozva: {{ samplingRecord.createdAt | date:'medium' }}</td>
           </tr>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Frissítve: {{ record.updatedAt || 'N/A' }}</td>
+            <td colspan="5" class="font-weight-bold">Frissítve: {{ samplingRecord.updatedAt || 'N/A' }}</td>
           </tr>
           </tbody>
         </table>
       </div>
     </div>
+  </div>
+  <div *ngIf="!samplingRecord" class="text-center">
+    <p>No sampling record found.</p>
   </div>
 </div>

@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {SamplingRecord} from "../../model/sampling-record/sampling-record.model";
 import {SamplingRecordListService} from "../../service/sampling-record-list.service";
 import {CommonModule} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-sampling-record-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './sampling-record-list.component.html',
   styleUrl: './sampling-record-list.component.css'
 })

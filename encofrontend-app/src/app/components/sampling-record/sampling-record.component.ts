@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SamplingRecord} from "../../model/sampling-record/sampling-record.model";
 import {SamplingRecordService} from "../../service/sampling-record.service";
 import {CommonModule} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -13,24 +14,26 @@ import {CommonModule} from "@angular/common";
 })
 
 export class SamplingRecordComponent implements OnInit {
-  samplingRecords: SamplingRecord[] = [];
+  samplingRecord: SamplingRecord | null = null;
   isLoading = true;
   errorMessage: string | null = null;
 
-  constructor(private samplingRecordService: SamplingRecordService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private samplingRecordService: SamplingRecordService
+  ) {}
 
   ngOnInit(): void {
-    this.samplingRecordService.getSamplingRecords().subscribe({
-      next: (records) => {
-        this.samplingRecords = records;
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.samplingRecordService.getSamplingRecordById(id).subscribe({
+      next: (record) => {
+        this.samplingRecord = record;
         this.isLoading = false;
-        console.log(this.samplingRecords)
       },
       error: (error) => {
-        this.errorMessage = 'Failed to load sampling records';
+        this.errorMessage = 'Failed to load sampling record';
         this.isLoading = false;
       },
-
     });
   }
 }

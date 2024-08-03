@@ -19,7 +19,9 @@
       </thead>
       <tbody>
       <tr *ngFor="let record of samplingRecords" [class.table-warning]="isRecordUpdated(record)">
-        <td>{{ record.samplingRecordId }}</td>
+        <td>
+          <a [routerLink]="['/sampling-record', record.samplingRecordId]">{{ record.samplingRecordId }}</a>
+        </td>
         <td>{{ record.sampleDate }}</td>
         <td>{{ record.conductedByName }}</td>
         <td>{{ record.locationCity }}</td>
