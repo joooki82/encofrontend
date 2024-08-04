@@ -255,6 +255,7 @@ import {LocationOfSampling} from "../../model/locationofsampling/locationofsampl
 import {AdjustmentMethod, SamplingType} from "../../model/sample-detail/sample-detail.model";
 import {SamplingRecord} from "../../model/sampling-record/sampling-record.model";
 import {CommonModule} from "@angular/common";
+import {AddSamplingRecordService} from "../../service/add-sampling-record.service";
 
 
 
@@ -276,7 +277,7 @@ export class AddSamplingRecordComponent implements OnInit {
   adjustmentMethods: AdjustmentMethod[] = [];
   samplingTypes: SamplingType[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private samplingRecordService: AddSamplingRecordService) {
     this.samplingRecordForm = this.fb.group({
       sampleDate: ['', Validators.required],
       conductedBy: [null, Validators.required],
@@ -302,7 +303,7 @@ export class AddSamplingRecordComponent implements OnInit {
       createdAt: [''],
       updatedAt: [null],
       createdBy: [null],
-      updatedBy: [null]
+      updatedBy: [null],
     });
   }
 
@@ -311,12 +312,12 @@ export class AddSamplingRecordComponent implements OnInit {
   }
 
   loadData() {
-    this.http.get<User[]>('http://localhost:8080/api/users').subscribe(data => this.users = data);
-    this.http.get<Contaminant[]>('http://localhost:8080/api/contaminants').subscribe(data => this.contaminants = data);
-    this.http.get<Equipment[]>('http://localhost:8080/api/equipments').subscribe(data => this.equipments = data);
-    this.http.get<LocationOfSampling[]>('http://localhost:8080/api/locations').subscribe(data => this.locations = data);
-    this.http.get<AdjustmentMethod[]>('http://localhost:8080/api/adjustment-methods').subscribe(data => this.adjustmentMethods = data);
-    this.http.get<SamplingType[]>('http://localhost:8080/api/sampling-types').subscribe(data => this.samplingTypes = data);
+    this.samplingRecordService.loadUsers().subscribe(data => (this.users = data));
+    this.samplingRecordService.loadContaminants().subscribe(data => (this.contaminants = data));
+    this.samplingRecordService.loadEquipments().subscribe(data => (this.equipments = data));
+    this.samplingRecordService.loadLocations().subscribe(data => (this.locations = data));
+    this.samplingRecordService.loadAdjustmentMethods().subscribe(data => (this.adjustmentMethods = data));
+    this.samplingRecordService.loadSamplingTypes().subscribe(data => (this.samplingTypes = data));
   }
 
   get equipmentList(): FormArray {
@@ -328,12 +329,14 @@ export class AddSamplingRecordComponent implements OnInit {
   }
 
   addEquipment() {
-    this.equipmentList.push(this.fb.group({
-      equipmentId: ['', Validators.required],
-      name: ['', Validators.required],
-      description: [''],
-      identifier: ['']
-    }));
+    this.equipmentList.push(
+      this.fb.group({
+        equipmentId: [''],
+        name: [''],
+        description: [''],
+        identifier: [''],
+      })
+    );
   }
 
   removeEquipment(index: number) {
@@ -341,23 +344,25 @@ export class AddSamplingRecordComponent implements OnInit {
   }
 
   addSampleDetail() {
-    this.sampleDetailList.push(this.fb.group({
-      detailId: [null],
-      seriesNumber: ['', Validators.required],
-      topicNumber: ['', Validators.required],
-      uniqueSampleNumber: ['', Validators.required],
-      insideSamplingLocation: ['', Validators.required],
-      contaminants: this.fb.array([]),
-      workerExamined: ['', Validators.required],
-      temperature: [0, Validators.required],
-      humidity: [0, Validators.required],
-      pressure: [0, Validators.required],
-      sampleVolumeFlowRate: ['', Validators.required],
-      adjustmentMethod: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-      samplingType: ['', Validators.required],
-    }));
+    this.sampleDetailList.push(
+      this.fb.group({
+        detailId: [null],
+        seriesNumber: ['', Validators.required],
+        topicNumber: ['', Validators.required],
+        uniqueSampleNumber: ['', Validators.required],
+        insideSamplingLocation: ['', Validators.required],
+        contaminants: this.fb.array([]),
+        workerExamined: ['', Validators.required],
+        temperature: [0, Validators.required],
+        humidity: [0, Validators.required],
+        pressure: [0, Validators.required],
+        sampleVolumeFlowRate: ['', Validators.required],
+        adjustmentMethod: ['', Validators.required],
+        startTime: ['', Validators.required],
+        endTime: ['', Validators.required],
+        samplingType: ['', Validators.required],
+      })
+    );
   }
 
   removeSampleDetail(index: number) {
@@ -369,27 +374,48 @@ export class AddSamplingRecordComponent implements OnInit {
   }
 
   addContaminant(sampleDetailIndex: number) {
-    this.getContaminantsArray(sampleDetailIndex).push(this.fb.group({
-      id: ['', Validators.required],
-      name: ['', Validators.required]
-    }));
+    this.getContaminantsArray(sampleDetailIndex).push(
+      this.fb.group({
+        id: [''],
+        name: [''],
+      })
+    );
   }
 
   removeContaminant(sampleDetailIndex: number, contaminantIndex: number) {
     this.getContaminantsArray(sampleDetailIndex).removeAt(contaminantIndex);
   }
 
+  private logValidationErrors(group: FormGroup = this.samplingRecordForm): void {
+    Object.keys(group.controls).forEach((key: string) => {
+      const abstractControl = group.get(key);
+
+      if (abstractControl instanceof FormGroup) {
+        this.logValidationErrors(abstractControl);
+      } else if (abstractControl && !abstractControl.valid) {
+        console.log(`Control: ${key}, Error: ${JSON.stringify(abstractControl.errors)}`);
+      }
+    });
+  }
+
+
   onSubmit() {
     if (this.samplingRecordForm.valid) {
       const samplingRecord: SamplingRecord = this.samplingRecordForm.value;
-      // Submit the form data to your backend
-      this.http.post('http://localhost:8080/api/sampling-records', samplingRecord).subscribe(response => {
-        console.log('Sampling record submitted', response);
-        // Handle success response
-      }, error => {
-        console.error('Error submitting sampling record', error);
-        // Handle error response
-      });
+      this.samplingRecordService.saveSamplingRecord(samplingRecord).subscribe(
+        response => {
+          console.log('Sampling record submitted', response);
+          // Handle success response
+        },
+        error => {
+          console.error('Error submitting sampling record', error);
+          // Handle error response
+        }
+      );
+    } else {
+      this.logValidationErrors();
+      console.log('Form is invalid');
     }
   }
 }
+
