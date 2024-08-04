@@ -371,7 +371,7 @@
         <div class="col-md-4">
           <label class="form-label">Equipment</label>
           <select formControlName="equipmentId" class="form-select">
-            <option *ngFor="let equipment of equipments" [value]="equipment.equipmentId">{{ equipment.name }}</option>
+            <option *ngFor="let equipmentOption of equipments" [value]="equipmentOption.equipmentId">{{ equipmentOption.name }}</option>
           </select>
         </div>
         <div class="col-md-1">
@@ -435,14 +435,18 @@
             <label class="form-label">Sample Volume Flow Rate</label>
             <input formControlName="sampleVolumeFlowRate" type="text" class="form-control" />
           </div>
-          <div class="col-md-6">
-            <label class="form-label">Adjustment Method</label>
-            <select formControlName="adjustmentMethod" class="form-select">
-              <option *ngFor="let method of adjustmentMethods" [value]="method.id">
-                {{ method.description }}
-              </option>
-            </select>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Adjustment Method</label>
+              <select formControlName="adjustmentMethod" class="form-select">
+                <option value="" disabled>Select an option</option>
+                <option *ngFor="let method of adjustmentMethods" [value]="method.adjustmentMethodId">
+                  {{ method.description }}
+                </option>
+              </select>
+            </div>
           </div>
+
         </div>
 
         <div class="row mb-3">
@@ -460,7 +464,8 @@
           <div class="col-md-6">
             <label class="form-label">Sampling Type</label>
             <select formControlName="samplingType" class="form-select">
-              <option *ngFor="let type of samplingTypes" [value]="type.id">
+              <option value="" disabled>Select an option</option>
+              <option *ngFor="let type of samplingTypes" [value]="type.samplingTypeId">
                 {{ type.description }}
               </option>
             </select>
@@ -468,13 +473,13 @@
         </div>
 
         <div>
-          <h5>Contaminants</h5>
           <div formArrayName="contaminants" *ngFor="let contaminant of getContaminantsArray(detailIndex).controls; let contaminantIndex = index">
             <div [formGroupName]="contaminantIndex" class="row align-items-end mb-2">
               <div class="col-md-5">
                 <label class="form-label">Contaminant</label>
-                <select formControlName="id" class="form-select">
-                  <option *ngFor="let contaminant of contaminants" [value]="contaminant.id">
+                <select formControlName="contaminantId" class="form-select">
+                  <option value="" disabled>Select an option</option>
+                  <option *ngFor="let contaminant of contaminants" [value]="contaminant.contaminantId">
                     {{ contaminant.name }}
                   </option>
                 </select>

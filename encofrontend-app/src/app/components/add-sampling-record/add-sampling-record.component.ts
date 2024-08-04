@@ -245,7 +245,7 @@
 //
 
 
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import {User} from "../../model/user/user.model";
@@ -256,6 +256,7 @@ import {AdjustmentMethod, SamplingType} from "../../model/sample-detail/sample-d
 import {SamplingRecord} from "../../model/sampling-record/sampling-record.model";
 import {CommonModule} from "@angular/common";
 import {AddSamplingRecordService} from "../../service/add-sampling-record.service";
+import {forkJoin, Subscription} from "rxjs";
 
 
 
@@ -270,19 +271,22 @@ import {AddSamplingRecordService} from "../../service/add-sampling-record.servic
 })
 export class AddSamplingRecordComponent implements OnInit {
   samplingRecordForm: FormGroup;
-  users: User[] = [];
-  contaminants: Contaminant[] = [];
-  equipments: Equipment[] = [];
+  users: User[]  = [];
+  contaminants: Contaminant[]  = [];
+  equipments: Equipment[]  = [];
   locations: LocationOfSampling[] = [];
-  adjustmentMethods: AdjustmentMethod[] = [];
-  samplingTypes: SamplingType[] = [];
+  adjustmentMethods: AdjustmentMethod[]  = [];
+  samplingTypes: SamplingType[]  = [];
+  private subscriptions: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder, private samplingRecordService: AddSamplingRecordService) {
+  constructor(private fb: FormBuilder,
+              private samplingRecordService: AddSamplingRecordService,
+              private cd: ChangeDetectorRef
+  ) {
     this.samplingRecordForm = this.fb.group({
       sampleDate: ['', Validators.required],
       conductedBy: [null, Validators.required],
       location: [null, Validators.required],
-      contaminants: this.fb.array([]),
       testedPlant: [''],
       technology: [''],
       numShiftsShiftDuration: [''],
@@ -298,8 +302,8 @@ export class AddSamplingRecordComponent implements OnInit {
       operationMode: [''],
       operationBreak: [''],
       localAirExtraction: [''],
-      equipmentList: this.fb.array([]),
-      sampleDetailList: this.fb.array([]),
+      equipmentList: this.fb.array([this.createEquipmentGroup()]),
+      sampleDetailList: this.fb.array([this.createSampleDetailGroup()]),
       createdAt: [''],
       updatedAt: [null],
       createdBy: [null],
@@ -312,13 +316,78 @@ export class AddSamplingRecordComponent implements OnInit {
   }
 
   loadData() {
-    this.samplingRecordService.loadUsers().subscribe(data => (this.users = data));
-    this.samplingRecordService.loadContaminants().subscribe(data => (this.contaminants = data));
-    this.samplingRecordService.loadEquipments().subscribe(data => (this.equipments = data));
-    this.samplingRecordService.loadLocations().subscribe(data => (this.locations = data));
-    this.samplingRecordService.loadAdjustmentMethods().subscribe(data => (this.adjustmentMethods = data));
-    this.samplingRecordService.loadSamplingTypes().subscribe(data => (this.samplingTypes = data));
+    forkJoin({
+      users: this.samplingRecordService.loadUsers(),
+      contaminants: this.samplingRecordService.loadContaminants(),
+      equipments: this.samplingRecordService.loadEquipments(),
+      locations: this.samplingRecordService.loadLocations(),
+      adjustmentMethods: this.samplingRecordService.loadAdjustmentMethods(),
+      samplingTypes: this.samplingRecordService.loadSamplingTypes()
+    }).subscribe({
+      next: (data) => {
+        this.users = data.users;
+        this.contaminants = data.contaminants;
+        this.equipments = data.equipments;
+        this.locations = data.locations;
+        this.adjustmentMethods = data.adjustmentMethods;
+        this.samplingTypes = data.samplingTypes;
+
+        console.log('Data Loaded', data);
+        this.cd.detectChanges(); // Ensure the UI is updated after loading data
+        this.subscribeToFormChanges(); // Subscribe to form changes after all data is loaded
+      },
+      error: (error) => console.error('Error loading data:', error)
+    });
+
   }
+
+  private subscribeToFormChanges(): void {
+
+    const formChangesSubscription = this.sampleDetailList.valueChanges.subscribe(value => {
+      console.log('Sample Detail List Changes:', JSON.stringify(value, null, 2));
+    });
+    this.subscriptions.add(formChangesSubscription);
+
+    // Log changes to the sampleDetailList FormArray
+    this.sampleDetailList.valueChanges.subscribe(value => {
+      console.log('Sample Detail List Changes:', JSON.stringify(value, null, 2));
+    });
+
+    // Log changes to the equipmentList FormArray
+    this.equipmentList.valueChanges.subscribe(value => {
+      console.log('Equipment List Changes:', JSON.stringify(value, null, 2));
+    });
+
+    // If you want to monitor individual form controls, you can do so like this:
+    this.samplingRecordForm.get('conductedBy')?.valueChanges.subscribe(value => {
+      console.log('Conducted By Changed:', value);
+    });
+
+    this.samplingRecordForm.get('location')?.valueChanges.subscribe(value => {
+      console.log('Location Changed:', value);
+    });
+
+    // Add similar subscriptions for other individual form controls or nested controls as needed
+    this.samplingRecordForm.get('sampleDetailList')?.valueChanges.subscribe(value => {
+      console.log('Sample Detail List Changed:', value);
+    });
+
+    // To track changes in nested form arrays within sampleDetailList
+    this.sampleDetailList.controls.forEach((control, index) => {
+      control.get('contaminants')?.valueChanges.subscribe(value => {
+        console.log(`Contaminants for Sample Detail ${index} Changed:`, JSON.stringify(value, null, 2));
+      });
+
+      control.get('adjustmentMethod')?.valueChanges.subscribe(value => {
+        console.log(`Adjustment Method for Sample Detail ${index} Changed:`, value);
+      });
+
+      control.get('samplingType')?.valueChanges.subscribe(value => {
+        console.log(`Sampling Type for Sample Detail ${index} Changed:`, value);
+      });
+    });
+  }
+
 
   get equipmentList(): FormArray {
     return this.samplingRecordForm.get('equipmentList') as FormArray;
@@ -328,15 +397,40 @@ export class AddSamplingRecordComponent implements OnInit {
     return this.samplingRecordForm.get('sampleDetailList') as FormArray;
   }
 
+  createEquipmentGroup(): FormGroup {
+    return this.fb.group({
+      equipmentId: ['', Validators.required]
+    });
+  }
+
+  createSampleDetailGroup(): FormGroup {
+    return this.fb.group({
+      detailId: [null],
+      seriesNumber: ['', Validators.required],
+      topicNumber: ['', Validators.required],
+      uniqueSampleNumber: ['', Validators.required],
+      insideSamplingLocation: ['', Validators.required],
+      contaminants: this.fb.array([this.createContaminantGroup()]),
+      workerExamined: ['', Validators.required],
+      temperature: [0, Validators.required],
+      humidity: [0, Validators.required],
+      pressure: [0, Validators.required],
+      sampleVolumeFlowRate: ['', Validators.required],
+      adjustmentMethod: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      samplingType: ['', Validators.required],
+    });
+  }
+
+  createContaminantGroup(): FormGroup {
+    return this.fb.group({
+      contaminantId: ['', Validators.required]
+    });
+  }
+
   addEquipment() {
-    this.equipmentList.push(
-      this.fb.group({
-        equipmentId: [''],
-        name: [''],
-        description: [''],
-        identifier: [''],
-      })
-    );
+    this.equipmentList.push(this.createEquipmentGroup());
   }
 
   removeEquipment(index: number) {
@@ -344,25 +438,7 @@ export class AddSamplingRecordComponent implements OnInit {
   }
 
   addSampleDetail() {
-    this.sampleDetailList.push(
-      this.fb.group({
-        detailId: [null],
-        seriesNumber: ['', Validators.required],
-        topicNumber: ['', Validators.required],
-        uniqueSampleNumber: ['', Validators.required],
-        insideSamplingLocation: ['', Validators.required],
-        contaminants: this.fb.array([]),
-        workerExamined: ['', Validators.required],
-        temperature: [0, Validators.required],
-        humidity: [0, Validators.required],
-        pressure: [0, Validators.required],
-        sampleVolumeFlowRate: ['', Validators.required],
-        adjustmentMethod: ['', Validators.required],
-        startTime: ['', Validators.required],
-        endTime: ['', Validators.required],
-        samplingType: ['', Validators.required],
-      })
-    );
+    this.sampleDetailList.push(this.createSampleDetailGroup());
   }
 
   removeSampleDetail(index: number) {
@@ -374,12 +450,7 @@ export class AddSamplingRecordComponent implements OnInit {
   }
 
   addContaminant(sampleDetailIndex: number) {
-    this.getContaminantsArray(sampleDetailIndex).push(
-      this.fb.group({
-        id: [''],
-        name: [''],
-      })
-    );
+    this.getContaminantsArray(sampleDetailIndex).push(this.createContaminantGroup());
   }
 
   removeContaminant(sampleDetailIndex: number, contaminantIndex: number) {
@@ -398,10 +469,11 @@ export class AddSamplingRecordComponent implements OnInit {
     });
   }
 
-
   onSubmit() {
     if (this.samplingRecordForm.valid) {
       const samplingRecord: SamplingRecord = this.samplingRecordForm.value;
+      console.log('Submitting form:', samplingRecord);
+
       this.samplingRecordService.saveSamplingRecord(samplingRecord).subscribe(
         response => {
           console.log('Sampling record submitted', response);
@@ -417,5 +489,9 @@ export class AddSamplingRecordComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
-}
 
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe(); // Unsubscribe all subscriptions
+  }
+}

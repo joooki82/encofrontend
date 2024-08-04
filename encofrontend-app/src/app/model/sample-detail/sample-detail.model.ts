@@ -2,13 +2,13 @@ import { Decimal } from 'decimal.js';
 import {Contaminant} from "../contaminant/contaminant.model";
 
 export interface AdjustmentMethod {
-  id: number;
+  adjustmentMethodId: number;
   code: string;
   description: string;
 }
 
 export interface SamplingType {
-  id: number;
+  samplingTypeId: number;
   code: string;
   description: string;
 }

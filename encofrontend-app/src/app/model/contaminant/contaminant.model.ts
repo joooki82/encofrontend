@@ -1,4 +1,4 @@
 export interface Contaminant {
-  id: number;
+  contaminantId: number;
   name: string;
 }
