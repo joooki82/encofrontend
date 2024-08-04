@@ -47,7 +47,4 @@ export class AddSamplingRecordService {
   loadSamplingTypes(): Observable<SamplingType[]> {
     return this.http.get<SamplingType[]>(`${this.baseUrl}/sampling-types`);
   }
-
-
-
 }
