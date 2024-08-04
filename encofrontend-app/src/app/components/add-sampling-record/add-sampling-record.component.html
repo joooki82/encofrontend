@@ -1,0 +1,224 @@
+<div class="container mt-4">
+  <form [formGroup]="samplingRecordForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="sampleDate" class="form-label">Sample Date</label>
+        <input id="sampleDate" formControlName="sampleDate" type="date" class="form-control">
+      </div>
+
+      <div class="col-md-6">
+        <label for="conductedBy" class="form-label">Conducted By</label>
+        <select id="conductedBy" formControlName="conductedBy" class="form-select">
+          <option *ngFor="let user of users" [ngValue]="user">{{user.firstName}} {{user.lastName}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="location" class="form-label">Location</label>
+        <select id="location" formControlName="location" class="form-select">
+          <option *ngFor="let location of locations" [ngValue]="location">{{location.name}}</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="testedPlant" class="form-label">Tested Plant</label>
+        <input id="testedPlant" formControlName="testedPlant" type="text" class="form-control">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="technology" class="form-label">Technology</label>
+        <input id="technology" formControlName="technology" type="text" class="form-control">
+      </div>
+
+      <div class="col-md-6">
+        <label for="numShiftsShiftDuration" class="form-label">Shift Duration</label>
+        <input id="numShiftsShiftDuration" formControlName="numShiftsShiftDuration" type="text" class="form-control">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label for="numWorkersPerShift" class="form-label">Workers per Shift</label>
+        <input id="numWorkersPerShift" formControlName="numWorkersPerShift" type="number" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <label for="exposureDuration" class="form-label">Exposure Duration</label>
+        <input id="exposureDuration" formControlName="exposureDuration" type="number" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <label for="temperature" class="form-label">Temperature</label>
+        <input id="temperature" formControlName="temperature" type="number" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <label for="humidity" class="form-label">Humidity</label>
+        <input id="humidity" formControlName="humidity" type="number" class="form-control">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="wind" class="form-label">Wind</label>
+        <input id="wind" formControlName="wind" type="text" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <label for="pressure1" class="form-label">Pressure 1</label>
+        <input id="pressure1" formControlName="pressure1" type="number" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <label for="pressure2" class="form-label">Pressure 2</label>
+        <input id="pressure2" formControlName="pressure2" type="number" class="form-control">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="otherEnvironmentalConditions" class="form-label">Other Environmental Conditions</label>
+      <textarea id="otherEnvironmentalConditions" formControlName="otherEnvironmentalConditions" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="airFlowConditions" class="form-label">Air Flow Conditions</label>
+      <textarea id="airFlowConditions" formControlName="airFlowConditions" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="operationMode" class="form-label">Operation Mode</label>
+      <input id="operationMode" formControlName="operationMode" type="text" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="operationBreak" class="form-label">Operation Break</label>
+      <input id="operationBreak" formControlName="operationBreak" type="text" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="localAirExtraction" class="form-label">Local Air Extraction</label>
+      <input id="localAirExtraction" formControlName="localAirExtraction" type="text" class="form-control">
+    </div>
+
+    <!-- Contaminants Section -->
+    <div formArrayName="contaminants" class="mb-3">
+      <h4>Contaminants</h4>
+      <div *ngFor="let contaminant of contaminantsArray.controls; let i=index" class="d-flex align-items-center mb-2">
+        <select [formControlName]="i" class="form-select me-2">
+          <option *ngFor="let contaminant of contaminants" [ngValue]="contaminant">{{contaminant.name}}</option>
+        </select>
+        <button type="button" class="btn btn-danger btn-sm" (click)="removeContaminant(i)">Remove</button>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addContaminant()">Add Contaminant</button>
+    </div>
+
+    <!-- Equipment Section -->
+    <div formArrayName="equipmentList" class="mb-3">
+      <h4>Equipment</h4>
+      <div *ngFor="let equipment of equipmentArray.controls; let i=index" [formGroupName]="i" class="d-flex align-items-center mb-2">
+        <select formControlName="equipmentId" class="form-select me-2">
+          <option *ngFor="let equipment of equipments" [ngValue]="equipment.equipmentId">{{equipment.name}}</option>
+        </select>
+        <button type="button" class="btn btn-danger btn-sm" (click)="removeEquipment(i)">Remove</button>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addEquipment()">Add Equipment</button>
+    </div>
+
+    <!-- Sample Detail Section -->
+    <div formArrayName="sampleDetailList" class="mb-3">
+      <h4>Sample Details</h4>
+      <div *ngFor="let detail of sampleDetailArray.controls; let i=index" [formGroupName]="i" class="border p-3 mb-3">
+        <div class="row mb-2">
+          <div class="col-md-4">
+            <label for="seriesNumber" class="form-label">Series Number</label>
+            <input id="seriesNumber" formControlName="seriesNumber" type="text" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label for="topicNumber" class="form-label">Topic Number</label>
+            <input id="topicNumber" formControlName="topicNumber" type="text" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label for="uniqueSampleNumber" class="form-label">Unique Sample Number</label>
+            <input id="uniqueSampleNumber" formControlName="uniqueSampleNumber" type="text" class="form-control">
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label for="insideSamplingLocation" class="form-label">Inside Sampling Location</label>
+            <input id="insideSamplingLocation" formControlName="insideSamplingLocation" type="text" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label for="workerExamined" class="form-label">Worker Examined</label>
+            <input id="workerExamined" formControlName="workerExamined" type="text" class="form-control">
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label for="temperature{{i}}" class="form-label">Temperature</label>
+            <input id="temperature{{i}}" formControlName="temperature" type="number" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label for="humidity{{i}}" class="form-label">Humidity</label>
+            <input id="humidity{{i}}" formControlName="humidity" type="number" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label for="pressure" class="form-label">Pressure</label>
+            <input id="pressure" formControlName="pressure" type="number" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="sampleVolumeFlowRate" class="form-label">Sample Volume Flow Rate</label>
+          <input id="sampleVolumeFlowRate" formControlName="sampleVolumeFlowRate" type="text" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label for="adjustmentMethod" class="form-label">Adjustment Method</label>
+          <select id="adjustmentMethod" formControlName="adjustmentMethod" class="form-select">
+            <option *ngFor="let method of adjustmentMethods" [ngValue]="method">{{method.description}}</option>
+          </select>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label for="startTime" class="form-label">Start Time</label>
+            <input id="startTime" formControlName="startTime" type="datetime-local" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label for="endTime" class="form-label">End Time</label>
+            <input id="endTime" formControlName="endTime" type="datetime-local" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="samplingType" class="form-label">Sampling Type</label>
+          <select id="samplingType" formControlName="samplingType" class="form-select">
+            <option *ngFor="let type of samplingTypes" [ngValue]="type">{{type.description}}</option>
+          </select>
+        </div>
+
+        <div formArrayName="contaminants">
+          <h4>Contaminants</h4>
+<!--          <div *ngFor="let contaminantCtrl of (detail.get('contaminants') as FormArray).controls; let j = index">-->
+<!--            <select [formControlName]="j">-->
+<!--              <option *ngFor="let contaminant of contaminants" [ngValue]="contaminant">{{contaminant.name}}</option>-->
+<!--            </select>-->
+<!--            <button type="button" (click)="removeSampleContaminant(i, j)">Remove</button>-->
+<!--          </div>-->
+<!--          <button type="button" (click)="addSampleContaminant(i)">Add Contaminant</button>-->
+        </div>
+
+        <button type="button" class="btn btn-danger mt-3" (click)="removeSampleDetail(i)">Remove Detail</button>
+      </div>
+      <button type="button" class="btn btn-success" (click)="addSampleDetail()">Add Sample Detail</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
