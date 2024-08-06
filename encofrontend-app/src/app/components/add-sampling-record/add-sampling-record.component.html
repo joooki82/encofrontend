@@ -1,3 +1,252 @@
+<!--<form [formGroup]="samplingRecordForm" (ngSubmit)="onSubmit()" class="container mt-4">-->
+<!--  <h2 class="mb-4">Add Sampling Record</h2>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-6">-->
+<!--      <label for="sampleDate" class="form-label">Sample Date</label>-->
+<!--      <input id="sampleDate" formControlName="sampleDate" type="date" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-6">-->
+<!--      <label for="conductedBy" class="form-label">Conducted By</label>-->
+<!--      <select id="conductedBy" formControlName="conductedBy" class="form-select">-->
+<!--        <option *ngFor="let user of users" [value]="user.id">-->
+<!--          {{ user.firstName }} {{ user.lastName }}-->
+<!--        </option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-6">-->
+<!--      <label for="location" class="form-label">Location</label>-->
+<!--      <select id="location" formControlName="location" class="form-select">-->
+<!--        <option *ngFor="let location of locations" [value]="location.locationId">-->
+<!--          {{ location.name }}-->
+<!--        </option>-->
+<!--      </select>-->
+<!--    </div>-->
+
+<!--    <div class="col-md-6">-->
+<!--      <label for="testedPlant" class="form-label">Tested Plant</label>-->
+<!--      <input id="testedPlant" formControlName="testedPlant" type="text" class="form-control" />-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-6">-->
+<!--      <label for="technology" class="form-label">Technology</label>-->
+<!--      <input id="technology" formControlName="technology" type="text" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-6">-->
+<!--      <label for="numShiftsShiftDuration" class="form-label">Shifts & Duration</label>-->
+<!--      <input id="numShiftsShiftDuration" formControlName="numShiftsShiftDuration" type="text" class="form-control" />-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-4">-->
+<!--      <label for="numWorkersPerShift" class="form-label">Workers Per Shift</label>-->
+<!--      <input id="numWorkersPerShift" formControlName="numWorkersPerShift" type="number" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-4">-->
+<!--      <label for="exposureDuration" class="form-label">Exposure Duration</label>-->
+<!--      <input id="exposureDuration" formControlName="exposureDuration" type="number" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-4">-->
+<!--      <label for="temperature" class="form-label">Temperature</label>-->
+<!--      <input id="temperature" formControlName="temperature" type="number" class="form-control" />-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-4">-->
+<!--      <label for="humidity" class="form-label">Humidity</label>-->
+<!--      <input id="humidity" formControlName="humidity" type="number" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-4">-->
+<!--      <label for="wind" class="form-label">Wind</label>-->
+<!--      <input id="wind" formControlName="wind" type="text" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-4">-->
+<!--      <label for="pressure1" class="form-label">Pressure 1</label>-->
+<!--      <input id="pressure1" formControlName="pressure1" type="number" class="form-control" />-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-6">-->
+<!--      <label for="pressure2" class="form-label">Pressure 2</label>-->
+<!--      <input id="pressure2" formControlName="pressure2" type="number" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-6">-->
+<!--      <label for="otherEnvironmentalConditions" class="form-label">Other Environmental Conditions</label>-->
+<!--      <input id="otherEnvironmentalConditions" formControlName="otherEnvironmentalConditions" type="text" class="form-control" />-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-6">-->
+<!--      <label for="airFlowConditions" class="form-label">Air Flow Conditions</label>-->
+<!--      <input id="airFlowConditions" formControlName="airFlowConditions" type="text" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-6">-->
+<!--      <label for="operationMode" class="form-label">Operation Mode</label>-->
+<!--      <input id="operationMode" formControlName="operationMode" type="text" class="form-control" />-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-md-6">-->
+<!--      <label for="operationBreak" class="form-label">Operation Break</label>-->
+<!--      <input id="operationBreak" formControlName="operationBreak" type="text" class="form-control" />-->
+<!--    </div>-->
+
+<!--    <div class="col-md-6">-->
+<!--      <label for="localAirExtraction" class="form-label">Local Air Extraction</label>-->
+<!--      <input id="localAirExtraction" formControlName="localAirExtraction" type="text" class="form-control" />-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="mb-3">-->
+<!--    <h4>Equipment List</h4>-->
+<!--    <div formArrayName="equipmentList" *ngFor="let equipment of equipmentList.controls; let i = index">-->
+<!--      <div [formGroupName]="i" class="row align-items-end mb-2">-->
+<!--        <div class="col-md-4">-->
+<!--          <label class="form-label">Equipment</label>-->
+<!--          <select formControlName="equipmentId" class="form-select">-->
+<!--            <option *ngFor="let equipment of equipments" [value]="equipment.equipmentId">{{ equipment.name }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <div class="col-md-1">-->
+<!--          <button type="button" class="btn btn-danger" (click)="removeEquipment(i)">Remove</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <button type="button" class="btn btn-primary" (click)="addEquipment()">Add Equipment</button>-->
+<!--  </div>-->
+
+<!--  <div class="mb-3">-->
+<!--    <h4>Sample Details</h4>-->
+<!--    <div formArrayName="sampleDetailList" *ngFor="let detail of sampleDetailList.controls; let detailIndex = index">-->
+<!--      <div [formGroupName]="detailIndex" class="mb-4 border p-3 rounded">-->
+<!--        <div class="row mb-3">-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Series Number</label>-->
+<!--            <input formControlName="seriesNumber" type="text" class="form-control" />-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Topic Number</label>-->
+<!--            <input formControlName="topicNumber" type="text" class="form-control" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Unique Sample Number</label>-->
+<!--            <input formControlName="uniqueSampleNumber" type="text" class="form-control" />-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Inside Sampling Location</label>-->
+<!--            <input formControlName="insideSamplingLocation" type="text" class="form-control" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Worker Examined</label>-->
+<!--            <input formControlName="workerExamined" type="text" class="form-control" />-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Temperature</label>-->
+<!--            <input formControlName="temperature" type="number" class="form-control" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Humidity</label>-->
+<!--            <input formControlName="humidity" type="number" class="form-control" />-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Pressure</label>-->
+<!--            <input formControlName="pressure" type="number" class="form-control" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Sample Volume Flow Rate</label>-->
+<!--            <input formControlName="sampleVolumeFlowRate" type="text" class="form-control" />-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Adjustment Method</label>-->
+<!--            <select formControlName="adjustmentMethod" class="form-select">-->
+<!--              <option *ngFor="let method of adjustmentMethods" [value]="method.id">-->
+<!--                {{ method.description }}-->
+<!--              </option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Start Time</label>-->
+<!--            <input formControlName="startTime" type="datetime-local" class="form-control" />-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">End Time</label>-->
+<!--            <input formControlName="endTime" type="datetime-local" class="form-control" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="row mb-3">-->
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Sampling Type</label>-->
+<!--            <select formControlName="samplingType" class="form-select">-->
+<!--              <option *ngFor="let type of samplingTypes" [value]="type.id">-->
+<!--                {{ type.description }}-->
+<!--              </option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--          <h5>Contaminants</h5>-->
+<!--          <div formArrayName="contaminants" *ngFor="let contaminant of getContaminantsArray(detailIndex).controls; let contaminantIndex = index">-->
+<!--            <div [formGroupName]="contaminantIndex" class="row align-items-end mb-2">-->
+<!--              <div class="col-md-5">-->
+<!--                <label class="form-label">Contaminant</label>-->
+<!--                <select formControlName="id" class="form-select">-->
+<!--                  <option *ngFor="let contaminant of contaminants" [value]="contaminant.id">-->
+<!--                    {{ contaminant.name }}-->
+<!--                  </option>-->
+<!--                </select>-->
+<!--              </div>-->
+<!--              <div class="col-md-1">-->
+<!--                <button type="button" class="btn btn-danger" (click)="removeContaminant(detailIndex, contaminantIndex)">Remove</button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <button type="button" class="btn btn-secondary" (click)="addContaminant(detailIndex)">Add Contaminant</button>-->
+<!--        </div>-->
+
+<!--        <button type="button" class="btn btn-danger mt-3" (click)="removeSampleDetail(detailIndex)">Remove Sample Detail</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <button type="button" class="btn btn-primary" (click)="addSampleDetail()">Add Sample Detail</button>-->
+<!--  </div>-->
+
+<!--  <button type="submit" class="btn btn-success mt-4" [disabled]="!samplingRecordForm.valid">Submit</button>-->
+<!--</form>-->
+
 <form [formGroup]="samplingRecordForm" (ngSubmit)="onSubmit()" class="container mt-4">
   <h2 class="mb-4">Add Sampling Record</h2>
 
@@ -115,33 +364,14 @@
     </div>
   </div>
 
-<!--  <div class="mb-3">-->
-<!--    <h4>Equipment List</h4>-->
-<!--    <div formArrayName="equipmentList" *ngFor="let equipment of equipmentList.controls; let i = index">-->
-<!--      <div [formGroupName]="i" class="row align-items-end mb-2">-->
-<!--        <div class="col-md-4">-->
-<!--          <label class="form-label">Equipment</label>-->
-<!--          <select formControlName="equipmentId"  class="form-select">-->
-<!--            <option *ngFor="let equipmentOption of equipments" [value]="equipmentOption.equipmentId">{{ equipmentOption.name }}</option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--        <div class="col-md-1">-->
-<!--          <button type="button" class="btn btn-danger" (click)="removeEquipment(i)">Remove</button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <button type="button" class="btn btn-primary" (click)="addEquipment()">Add Equipment</button>-->
-<!--  </div>-->
   <div class="mb-3">
     <h4>Equipment List</h4>
-    <div formArrayName="equipmentList">
-      <div *ngFor="let equipmentControl of equipmentList.controls; let i = index" class="row align-items-end mb-2">
+    <div formArrayName="equipmentList" *ngFor="let equipment of equipmentList.controls; let i = index">
+      <div [formGroupName]="i" class="row align-items-end mb-2">
         <div class="col-md-4">
           <label class="form-label">Equipment</label>
-          <select [formControlName]="i" class="form-select">
-            <option *ngFor="let equipmentOption of equipments" [value]="equipmentOption.equipmentId">
-              {{ equipmentOption.name }}
-            </option>
+          <select formControlName="equipmentId" class="form-select">
+            <option *ngFor="let equipmentOption of equipments" [value]="equipmentOption.equipmentId">{{ equipmentOption.name }}</option>
           </select>
         </div>
         <div class="col-md-1">

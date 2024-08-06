@@ -20,7 +20,7 @@ export class AddSamplingRecordService {
   // Method to save the sampling record
   saveSamplingRecord(record: SamplingRecord): Observable<any> {
     console.log('record', record);
-    return this.http.post(`${this.baseUrl}/sampling-records/full`, record);
+    return this.http.post(`${this.baseUrl}/sampling-records`, record);
   }
 
   // Method to load initial data
