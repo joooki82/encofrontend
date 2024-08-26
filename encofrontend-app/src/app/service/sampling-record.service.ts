@@ -11,10 +11,6 @@ export class SamplingRecordService {
 
   constructor(private http: HttpClient) {}
 
-  getSamplingRecords(): Observable<SamplingRecord[]> {
-    return this.http.get<SamplingRecord[]>(this.apiUrl);
-  }
-
   getSamplingRecordById(id: number): Observable<SamplingRecord> {
     return this.http.get<SamplingRecord>(`${this.apiUrl}/${id}`);
   }

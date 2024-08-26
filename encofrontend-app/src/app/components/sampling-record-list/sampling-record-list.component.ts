@@ -21,11 +21,11 @@ export class SamplingRecordListComponent implements OnInit {
       records => {
         this.samplingRecords = records.map(record => ({
           ...record,
-          conductedByName: `${record.conductedBy.firstName} ${record.conductedBy.lastName}`,
-          locationCity: record.location.city,
-          contaminantNames: record.contaminants.map(c => c.name).join(', '), // Assuming contaminants is an array
-          equipmentNames: record.equipmentList.map(e => e.name).join(', '),
-          sampleDetailNumbers: record.sampleDetailList.map(sd => sd.uniqueSampleNumber).join(', ')
+          conductedByName: `${record.conductedBy?.firstName || 'N/A'} ${record.conductedBy?.lastName || 'N/A'}`,
+          locationCity: record.location?.city || 'N/A',
+          contaminantNames: record.contaminants?.map(c => c.name).join(', ') || 'N/A',
+          equipmentNames: record.equipmentList?.map(e => e.name).join(', ') || 'N/A',
+          sampleDetailNumbers: record.sampleDetailList?.map(sd => sd.uniqueSampleNumber).join(', ') || 'N/A',
         }));
       },
       error => console.error('Error fetching sampling records:', error)

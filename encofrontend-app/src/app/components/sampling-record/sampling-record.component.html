@@ -149,16 +149,28 @@
         <table class="table table-bordered mt-4">
           <tbody>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Készítette: {{ samplingRecord.createdBy.firstName }} {{ samplingRecord.createdBy.lastName }}</td>
+            <td colspan="5" class="font-weight-bold">
+              Készítette:
+              {{ samplingRecord.createdBy?.firstName || 'N/A' }}
+              {{ samplingRecord.createdBy?.lastName || '' }}
+            </td>
           </tr>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Utoljára módosította: {{ samplingRecord.updatedBy?.firstName || 'N/A' }} {{ samplingRecord.updatedBy?.lastName || '' }}</td>
+            <td colspan="5" class="font-weight-bold">
+              Utoljára módosította:
+              {{ samplingRecord.updatedBy?.firstName || 'N/A' }}
+              {{ samplingRecord.updatedBy?.lastName || '' }}
+            </td>
           </tr>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Létrehozva: {{ samplingRecord.createdAt | date:'medium' }}</td>
+            <td colspan="5" class="font-weight-bold">
+              Létrehozva: {{ samplingRecord.createdAt | date:'medium' }}
+            </td>
           </tr>
           <tr class="bg-light">
-            <td colspan="5" class="font-weight-bold">Frissítve: {{ samplingRecord.updatedAt || 'N/A' }}</td>
+            <td colspan="5" class="font-weight-bold">
+              Frissítve: {{ samplingRecord.updatedAt ? (samplingRecord.updatedAt | date:'medium') : 'N/A' }}
+            </td>
           </tr>
           </tbody>
         </table>
