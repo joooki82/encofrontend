@@ -2,14 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {SampleDetail} from "../../model/sample-detail/sample-detail.model";
 import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
-import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatInputModule} from "@angular/material/input";
 import { MatButtonModule} from "@angular/material/button";
-
-import {CommandModule} from "@angular/cli/src/command-builder/command-module";
 import {CommonModule} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {SampleDetailService} from '../../services/sample-detail.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 
@@ -21,14 +20,13 @@ import {SampleDetailService} from '../../services/sample-detail.service';
     CommonModule,
     ReactiveFormsModule,
     MatFormField,
-    NgxMatDatetimePickerModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule,
-    NgxMatTimepickerModule,
-    MatIcon
+    MatIcon,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
   templateUrl: './sample-detail.component.html',
   styleUrl: './sample-detail.component.css'
@@ -55,7 +53,11 @@ export class SampleDetailComponent implements OnInit {
       sampleVolumeFlowRate: ['', Validators.required],
       adjustmentMethodId: ['', Validators.required],
       startTime: ['', Validators.required],
+      startTimeHour: ['', [Validators.required, Validators.min(0), Validators.max(23)]],
+      startTimeMinute: ['', [Validators.required, Validators.min(0), Validators.max(59)]],
       endTime: ['', Validators.required],
+      endTimeHour: ['', [Validators.required, Validators.min(0), Validators.max(23)]],
+      endTimeMinute: ['', [Validators.required, Validators.min(0), Validators.max(59)]],
       samplingTypeId: ['', Validators.required]
     });
   }
@@ -85,16 +87,38 @@ export class SampleDetailComponent implements OnInit {
 
   onSubmit() {
     if (this.sampleDetailForm.valid) {
+      const formValue = this.sampleDetailForm.value;
+
+      // Combine date and time for startTime
+      const startTime = new Date(
+        formValue.startTime.getFullYear(),
+        formValue.startTime.getMonth(),
+        formValue.startTime.getDate(),
+        formValue.startTimeHour,
+        formValue.startTimeMinute
+      );
+
+      // Combine date and time for endTime
+      const endTime = new Date(
+        formValue.endTime.getFullYear(),
+        formValue.endTime.getMonth(),
+        formValue.endTime.getDate(),
+        formValue.endTimeHour,
+        formValue.endTimeMinute
+      );
+
       const newSampleDetail: SampleDetail = {
-        ...this.sampleDetailForm.value,
-        // startTime: moment(this.sampleDetailForm.value.startTime).toDate(),
-        // endTime: moment(this.sampleDetailForm.value.endTime).toDate()
+        ...formValue,
+        startTime,
+        endTime
       };
+
       this.sampleDetailService.saveSampleDetail(newSampleDetail).subscribe(response => {
         this.sampleDetailList.push(response);
         this.sampleDetailForm.reset();
       });
-      console.log(this.sampleDetailForm.value)
+
+      console.log(newSampleDetail);
     }
   }
 
