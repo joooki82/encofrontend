@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Equipment} from "../../model/equipment/equipment.model";
-import {EquipmentService} from "../../service/equipment.service";
+
 import {CommonModule} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {EquipmentService} from '../../services/equipment.service';
 
 
 

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SamplingRecord} from "../../model/sampling-record/sampling-record.model";
-import {SamplingRecordService} from "../../service/sampling-record.service";
 import {CommonModule} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
+import {SamplingRecordService} from '../../services/sampling-record.service';
 
 
 @Component({

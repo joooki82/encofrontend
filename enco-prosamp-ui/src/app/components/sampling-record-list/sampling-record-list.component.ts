@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SamplingRecord} from "../../model/sampling-record/sampling-record.model";
-import {SamplingRecordListService} from "../../service/sampling-record-list.service";
 import {CommonModule} from "@angular/common";
 import {RouterLink} from "@angular/router";
+import {SamplingRecordListService} from '../../services/sampling-record-list.service';
 
 @Component({
   selector: 'app-sampling-record-list',

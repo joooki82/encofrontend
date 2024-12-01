@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {LocationService} from "../../service/location.service";
+
 import {CommonModule} from "@angular/common";
 import {LocationOfSampling} from "../../model/locationofsampling/locationofsampling.model";
+import {LocationService} from '../../services/location.service';
 
 @Component({
   selector: 'app-location',

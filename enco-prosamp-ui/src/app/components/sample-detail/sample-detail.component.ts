@@ -5,10 +5,11 @@ import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatInputModule} from "@angular/material/input";
 import { MatButtonModule} from "@angular/material/button";
-import {SampleDetailService} from "../../service/sample-detail.service";
+
 import {CommandModule} from "@angular/cli/src/command-builder/command-module";
 import {CommonModule} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
+import {SampleDetailService} from '../../services/sample-detail.service';
 
 
 

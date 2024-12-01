@@ -255,8 +255,9 @@ import {LocationOfSampling} from "../../model/locationofsampling/locationofsampl
 import {AdjustmentMethod, SamplingType} from "../../model/sample-detail/sample-detail.model";
 import {SamplingRecord} from "../../model/sampling-record/sampling-record.model";
 import {CommonModule} from "@angular/common";
-import {AddSamplingRecordService} from "../../service/add-sampling-record.service";
+
 import {forkJoin, Subscription} from "rxjs";
+import {AddSamplingRecordService} from '../../services/add-sampling-record.service';
 
 
 
