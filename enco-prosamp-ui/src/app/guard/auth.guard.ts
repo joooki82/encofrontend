@@ -1,39 +1,47 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
+  CanActivate,
   Router,
   RouterStateSnapshot,
-} from "@angular/router";
-import { KeycloakAuthGuard, KeycloakService } from "keycloak-angular";
+  UrlTree,
+} from '@angular/router';
+import {KeycloakOperationService} from "../services/keycloak/keycloak.service";
+
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
-export class AuthGuard extends KeycloakAuthGuard {
+export class AuthGuard implements CanActivate {
   constructor(
-    protected override readonly router: Router,
-    protected readonly keycloak: KeycloakService
-  ) {
-    super(router, keycloak);
-  }
+      private keycloakOperationService: KeycloakOperationService,
+      private router: Router
+  ) {}
 
-  public async isAccessAllowed(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ) {
-    // Force the user to log in if currently unauthenticated.
-    if (!this.authenticated) {
-      await this.keycloak.login({
-        redirectUri: window.location.origin + state.url,
-      });
+  async canActivate(
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot
+  ): Promise<boolean | UrlTree> {
+    const isLoggedIn = await this.keycloakOperationService.isLoggedIn();
+
+    if (!isLoggedIn) {
+      // Redirect to Keycloak login
+      this.keycloakOperationService.logout();
+      return false;
     }
-    // Get the roles required from the route.
-    const requiredRoles = route.data["roles"];
-    // Allow the user to proceed if no additional roles are required to access the route.
-    if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
-      return true;
+
+    const requiredRoles = route.data['roles'] as string[]; // Roles defined in app.routes.ts
+    if (requiredRoles && requiredRoles.length > 0) {
+      const hasRole = requiredRoles.some((role) =>
+          this.keycloakOperationService.hasRole(role)
+      );
+
+      if (!hasRole) {
+        // Redirect to an unauthorized page or show an error
+        return this.router.createUrlTree(['/unauthorized']);
+      }
     }
-    // Allow the user to proceed if all the required roles are present.
-    return requiredRoles.every((role) => this.roles.includes(role));
+
+    return true;
   }
 }
