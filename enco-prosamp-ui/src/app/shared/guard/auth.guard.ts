@@ -23,6 +23,8 @@ export class AuthGuard extends KeycloakAuthGuard {
         }
         // Get the roles required from the route.
         const requiredRoles = route.data["roles"];
+        console.log('requiredRoles: ', requiredRoles);
+
         // Allow the user to proceed if no additional roles are required to access the route.
         if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
             return true;
@@ -31,3 +33,27 @@ export class AuthGuard extends KeycloakAuthGuard {
         return requiredRoles.every((role) => this.roles.includes(role));
     }
 }
+
+
+//
+// import { Injectable } from '@angular/core';
+// import { CanActivate, Router } from '@angular/router';
+// import { KeycloakService } from 'keycloak-angular';
+//
+// @Injectable({
+//     providedIn: 'root'
+// })
+// export class AuthGuard implements CanActivate {
+//     constructor(private keycloak: KeycloakService, private router: Router) {}
+//
+//     async canActivate(): Promise<boolean> {
+//         const isAuthenticated = this.keycloak.isLoggedIn();
+//         if (!isAuthenticated) {
+//             await this.keycloak.login(); // Redirects to Keycloak login page
+//             return false;
+//         }
+//         return true;
+//     }
+// }
+//
+

@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
   loadUserRoles(): void {
     this.keycloakService.isLoggedIn().then((loggedIn) => {
       if (loggedIn) {
-        this.roles = this.keycloakService.getClientRoles();
+        this.roles = this.keycloakService.getUserRoles();
         console.log('User roles:', this.roles);
       } else {
         console.warn('User is not logged in');
