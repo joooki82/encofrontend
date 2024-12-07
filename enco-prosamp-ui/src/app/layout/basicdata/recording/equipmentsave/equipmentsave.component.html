@@ -1,0 +1,79 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Mintavételi eszközök'" [icon]="'fa-tools'"></app-page-header>
+
+    <div class="row">
+        <!-- Equipment List Column -->
+        <div class="col-lg-8">
+            <h4 class="text-primary">Equipment List</h4>
+            <div *ngIf="equipmentList.length > 0; else noData">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered shadow-sm rounded">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Identifier</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let equipment of equipmentList">
+                            <td>
+                                <i class="fa fa-cogs text-primary"></i> {{ equipment.name }}
+                            </td>
+                            <td>{{ equipment.identifier }}</td>
+                            <td>{{ equipment.description }}</td>
+                            <td>
+                                <button (click)="onDelete(equipment.equipmentId)" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <ng-template #noData>
+                <p class="text-muted">No equipment available.</p>
+            </ng-template>
+        </div>
+
+        <!-- New Equipment Form Column -->
+        <div class="col-lg-4">
+            <h4 class="text-primary">Add New Equipment</h4>
+            <form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()" class="bg-light p-3 rounded shadow-sm">
+                <fieldset class="form-group">
+                    <label for="name" class="font-weight-bold">Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-gear"></i></span>
+                        </div>
+                        <input id="name" formControlName="name" class="form-control" placeholder="Enter equipment name" />
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="identifier" class="font-weight-bold">Identifier</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-id-badge"></i></span>
+                        </div>
+                        <input id="identifier" formControlName="identifier" class="form-control" placeholder="Enter equipment identifier" />
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="description" class="font-weight-bold">Description</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-pencil"></i></span>
+                        </div>
+                        <textarea id="description" formControlName="description" class="form-control" placeholder="Enter equipment description"></textarea>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-primary btn-block">Add Equipment</button>
+            </form>
+        </div>
+    </div>
+</div>
