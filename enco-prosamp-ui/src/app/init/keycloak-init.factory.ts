@@ -17,9 +17,8 @@ export function initializeKeycloak(keycloak: KeycloakService) {
             //         window.location.origin + '/assets/silent-check-sso.html',
             // },
             initOptions: {
-                onLoad: 'login-required',
-                // redirectUri: 'http://localhost:4200/',
-                checkLoginIframe: false,
+                onLoad: 'check-sso', // Use 'check-sso' to avoid forcing redirection
+                silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
                 pkceMethod: 'S256',      // Enable PKCE
                 redirectUri: window.location.origin,
             },
