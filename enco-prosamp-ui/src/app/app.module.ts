@@ -16,6 +16,7 @@ import {APP_INITIALIZER, NgModule} from "@angular/core";
 import {AppComponent} from "./app.component";
 import {initializeKeycloak} from "./init/keycloak-init.factory";
 import {AuthGuard} from "./shared";
+import {HttpLoggerInterceptor} from "./shared/interceptor/http-logger.interceptor";
 
 // export const initializeKeycloak = (keycloak: KeycloakService) => async () => {
 //     if (environment.keycloak.enable) {
@@ -98,6 +99,11 @@ import {AuthGuard} from "./shared";
             provide: HTTP_INTERCEPTORS,
             useClass: KeycloakBearerInterceptor,
             multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpLoggerInterceptor,
+            multi: true
         },
         provideHttpClient(
             withInterceptorsFromDi() // tell httpClient to use interceptors from DI

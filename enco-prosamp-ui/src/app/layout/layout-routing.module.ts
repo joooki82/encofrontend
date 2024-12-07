@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from './layout.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LayoutComponent} from './layout.component';
 import {ProfileComponent} from "./profile/profile.component";
 import {AuthGuard} from "../shared";
 
@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+            {path: '', redirectTo: 'dashboard', pathMatch: 'prefix'},
             {
                 path: 'dashboard',
                 loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
@@ -22,13 +22,13 @@ const routes: Routes = [
                 path: 'tables',
                 loadChildren: () => import('./tables/tables.module').then((m) => m.TablesModule),
                 canActivate: [AuthGuard],
-                data: { roles: ['general_manager'] }, // Accessible only by users with the 'general_manager' role
+                data: {roles: ['general_manager']}, // Accessible only by users with the 'general_manager' role
             },
             {
                 path: 'forms',
                 loadChildren: () => import('./form/form.module').then((m) => m.FormModule),
                 canActivate: [AuthGuard],
-                data: { roles: ['engineer'] }, // Accessible only by users with the 'engineer' role
+                data: {roles: ['engineer']}, // Accessible only by users with the 'engineer' role
             },
             {
                 path: 'grid',
@@ -52,6 +52,12 @@ const routes: Routes = [
                 path: 'blank-page',
                 loadChildren: () => import('./blank-page/blank-page.module').then((m) => m.BlankPageModule),
             },
+            {
+                path: 'equipmentsave',
+                loadChildren: () => import('./basicdata/recording/equipmentsave/equipmentsave.module').then(m => m.EquipmentsaveModule),
+                data: {roles: ['head_of_laboratory']}, // Accessible only by users with the 'technician' role
+            },
+
         ],
     },
 ];
@@ -60,4 +66,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule {
+}

@@ -28,17 +28,17 @@
             <i class="fa fa-th-list"></i>&nbsp;
             <span>{{ 'Component' | translate }}</span>
         </a>
-        <div class="nested-menu">
+        <div class="nested-menu" *ngIf="keycloakService.hasRole('head_of_laboratory')">
             <a (click)="addExpandClass('pages')" class="list-group-item">
                 <i class="fa fa-plus"></i>&nbsp;
-                <span>{{ 'Menu' | translate }}</span>
+                <span>{{ 'Alapadat rögzítés' | translate }}</span>
             </a>
             <li [class.expand]="showMenu === 'pages'" class="nested">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/equipmentsave']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Submenu' | translate }}</span>
+                            <span>{{ 'Eszközök' | translate }}</span>
                         </a>
                     </li>
                     <li>

@@ -4,6 +4,7 @@
 
 export const environment = {
     production: false,
+    apiUrl: 'http://localhost:8081/api',
     keycloak: {
         enable: true,                       // Enable or disable Keycloak for Frontend app
         authority: 'http://localhost:8080', // Keycloak URL
