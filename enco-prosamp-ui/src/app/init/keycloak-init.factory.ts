@@ -1,12 +1,13 @@
 import {KeycloakService} from "keycloak-angular";
+import {environment} from "../../environments/environment";
 
 export function initializeKeycloak(keycloak: KeycloakService) {
     return () =>
         keycloak.init({
             config: {
-                url: 'http://localhost:8080/',
-                realm: 'Encotech',
-                clientId: 'enco-prosamp-angular-ui',
+                url: environment.keycloak.authority,
+                realm: environment.keycloak.realm,
+                clientId: environment.keycloak.clientId,
             },
             enableBearerInterceptor: true,
             bearerPrefix: 'Bearer',

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
     {
@@ -12,6 +13,7 @@ const routes: Routes = [
                 path: 'dashboard',
                 loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
             },
+            { path: 'profile', loadChildren: () => import('./profile/profile.module').then((m) => m.ProfileModule) },
             { path: 'charts', loadChildren: () => import('./charts/charts.module').then((m) => m.ChartsModule) },
             { path: 'tables', loadChildren: () => import('./tables/tables.module').then((m) => m.TablesModule) },
             { path: 'forms', loadChildren: () => import('./form/form.module').then((m) => m.FormModule) },
@@ -27,9 +29,9 @@ const routes: Routes = [
             {
                 path: 'blank-page',
                 loadChildren: () => import('./blank-page/blank-page.module').then((m) => m.BlankPageModule)
-            }
+            },
         ]
-    }
+    },
 ];
 
 @NgModule({

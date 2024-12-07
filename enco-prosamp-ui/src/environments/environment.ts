@@ -3,8 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false
-    // keycloak: {
+    production: false,
+    keycloak: {
+        enable: true,                       // Enable or disable Keycloak for Frontend app
+        authority: 'http://localhost:8080', // Keycloak URL
+        realm: 'Encotech',                  // Realm name
+        clientId: 'enco-prosamp-angular-ui',
+        redirectUri: 'http://localhost:4200' // Frontend app URL for redirects
+    }
+        // keycloak: {
     //     enable: true, //Enable or disable Keycloak for Frontend app
     //     authority: 'http://localhost:8080', //Keycloak URL
     //     redirectUri: 'http://localhost:4200', //Frontend app URL

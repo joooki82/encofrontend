@@ -1,0 +1,34 @@
+<div class="profile-container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>Bejelentkezett felhasználó</h4>
+        </div>
+        <div class="card-body">
+            <div *ngIf="userProfile; else loading">
+                <div class="profile-section">
+                    <h5 class="section-title">Személyes információk</h5>
+                    <p><strong>Felhasználó név:</strong> {{ userProfile.username }}</p>
+                    <p><strong>Vezetéknév:</strong> {{ userProfile.lastName }}</p>
+                    <p><strong>Keresznév:</strong> {{ userProfile.firstName }}</p>
+                    <p><strong>Email:</strong> {{ userProfile.email }}</p>
+                </div>
+
+                <div class="profile-section">
+                    <h5 class="section-title">Szerepkörök</h5>
+                    <ul>
+                        <li *ngFor="let role of roles">{{ role }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <ng-template #loading>
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>Loading profile...</p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

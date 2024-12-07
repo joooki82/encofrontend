@@ -9,7 +9,10 @@ import {KeycloakOperationService} from "../../../shared/services/keycloak.servic
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+
     public pushRightClass: string;
+    currentUserName: string = ''; // Holds the current user's name
 
     constructor(
         private translate: TranslateService,
@@ -25,6 +28,8 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.pushRightClass = 'push-right';
+        this.loadUserProfile();
+
     }
 
     isToggled(): boolean {
@@ -37,21 +42,40 @@ export class HeaderComponent implements OnInit {
         dom.classList.toggle(this.pushRightClass);
     }
 
-    rltAndLtr() {
-        const dom: any = document.querySelector('body');
-        dom.classList.toggle('rtl');
-    }
-
-    onLoggedout() {
-        localStorage.removeItem('isLoggedin');
-    }
+    // rltAndLtr() {
+    //     const dom: any = document.querySelector('body');
+    //     dom.classList.toggle('rtl');
+    // }
+    //
+    // onLoggedout() {
+    //     localStorage.removeItem('isLoggedin');
+    // }
 
     logout() {
         this.keycloakService.logout(); // Use the Keycloak logout
     }
 
-    changeLang(language: string) {
-        this.translate.use(language);
+    // changeLang(language: string) {
+    //     this.translate.use(language);
+    // }
+
+    async loadUserProfile(): Promise<void> {
+        try {
+            const userProfile = await this.keycloakService.getUserProfile();
+            this.currentUserName = this.formatUserName(userProfile);
+        } catch (error) {
+            console.error('Error loading user profile:', error);
+            this.currentUserName = 'Guest'; // Fallback for error scenarios
+        }
+    }
+
+    private formatUserName(userProfile: any): string {
+        const lastName = userProfile.lastName || '';
+        const firstName = userProfile.firstName || '';
+        if (lastName && firstName) {
+            return `${lastName} ${firstName}`;
+        }
+        return userProfile.username || 'Guest'; // Fallback to username or Guest
     }
 
 

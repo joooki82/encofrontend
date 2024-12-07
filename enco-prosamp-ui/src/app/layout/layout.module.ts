@@ -7,9 +7,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
     imports: [CommonModule, LayoutRoutingModule, TranslateModule, NgbDropdownModule],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent ]
 })
 export class LayoutModule {}
