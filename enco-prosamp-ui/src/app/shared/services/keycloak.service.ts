@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {KeycloakService} from "keycloak-angular";
-import {environment} from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class KeycloakOperationService {
