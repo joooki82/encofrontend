@@ -1,0 +1,115 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Locations'" [icon]="'fa-map-marker-alt'"></app-page-header>
+
+    <div class="row">
+        <!-- Location List Column -->
+        <div class="col-lg-8">
+            <h4 class="text-primary">Location List</h4>
+            <div *ngIf="locationList.length > 0; else noData">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered shadow-sm rounded">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Zip Code</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Street Name</th>
+                            <th scope="col">Street Number</th>
+                            <th scope="col">Hrsz</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let location of locationList">
+                            <td>
+                                <i class="fa fa-map-marker-alt text-primary"></i> {{ location.name }}
+                            </td>
+                            <td>{{ location.zipCode }}</td>
+                            <td>{{ location.city }}</td>
+                            <td>{{ location.streetName }}</td>
+                            <td>{{ location.streetNumber }}</td>
+                            <td>{{ location.hrsz }}</td>
+                            <td>
+                                <button (click)="onDelete(location.locationId)" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <ng-template #noData>
+                <p class="text-muted">No locations available.</p>
+            </ng-template>
+        </div>
+
+        <!-- New Location Form Column -->
+        <div class="col-lg-4">
+            <h4 class="text-primary">Add New Location</h4>
+            <form [formGroup]="locationForm" (ngSubmit)="onSubmit()" class="bg-light p-3 rounded shadow-sm">
+                <fieldset class="form-group">
+                    <label for="name" class="font-weight-bold">Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-map-signs"></i></span>
+                        </div>
+                        <input id="name" formControlName="name" class="form-control" placeholder="Enter location name" />
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="zipCode" class="font-weight-bold">Zip Code</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                        </div>
+                        <input id="zipCode" formControlName="zipCode" class="form-control" placeholder="Enter zip code" />
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="city" class="font-weight-bold">City</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-building"></i></span>
+                        </div>
+                        <input id="city" formControlName="city" class="form-control" placeholder="Enter city" />
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="streetName" class="font-weight-bold">Street Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-road"></i></span>
+                        </div>
+                        <input id="streetName" formControlName="streetName" class="form-control" placeholder="Enter street name" />
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="streetNumber" class="font-weight-bold">Street Number</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-hashtag"></i></span>
+                        </div>
+                        <input id="streetNumber" formControlName="streetNumber" class="form-control" placeholder="Enter street number" />
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="hrsz" class="font-weight-bold">Hrsz</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-pencil"></i></span>
+                        </div>
+                        <input id="hrsz" formControlName="hrsz" class="form-control" placeholder="Enter hrsz" />
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-primary btn-block">Add Location</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -57,6 +57,13 @@ const routes: Routes = [
                 loadChildren: () => import('./basicdata/recording/equipmentsave/equipmentsave.module').then(m => m.EquipmentsaveModule),
                 data: {roles: ['head_of_laboratory']}, // Accessible only by users with the 'technician' role
             },
+            {
+                path: 'locationsave',
+                loadChildren: () => import('./basicdata/recording/locationsave/locationsave.module').then(m => m.LocationsaveModule),
+                data: {roles: ['head_of_laboratory']}, // Accessible only by users with the 'technician' role
+
+            },
+
 
         ],
     },
