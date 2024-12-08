@@ -1,0 +1,59 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Sampling Records'" [icon]="'fa-vials'"></app-page-header>
+
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">Sampling Records</div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover table-striped table-bordered shadow-sm rounded">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Record ID</th>
+                            <th scope="col">Sample Date</th>
+                            <th scope="col">Conducted By</th>
+                            <th scope="col">Location (City)</th>
+                            <th scope="col">Contaminants</th>
+                            <th scope="col">Tested Plant</th>
+                            <th scope="col">Technology</th>
+                            <th scope="col">Equipment</th>
+                            <th scope="col">Sample Details</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Updated At</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr
+                            *ngFor="let record of samplingRecords"
+                            [class.table-warning]="isRecordUpdated(record)"
+                        >
+                            <td>
+                                <a [routerLink]="['/sampling-record', record.samplingRecordId]">
+                                    {{ record.samplingRecordId }}
+                                </a>
+                            </td>
+                            <td>{{ record.sampleDate | date:'mediumDate' }}</td>
+                            <td>{{ record.conductedByName }}</td>
+                            <td>{{ record.locationCity }}</td>
+                            <td>{{ record.contaminantNames }}</td>
+                            <td>{{ record.testedPlant }}</td>
+                            <td>{{ record.technology }}</td>
+                            <td>{{ record.equipmentNames }}</td>
+                            <td>{{ record.sampleDetailNumbers }}</td>
+                            <td>{{ record.createdAt | date:'medium' }}</td>
+                            <td>{{ record.updatedAt | date:'medium' || 'N/A' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- No Records Section -->
+            <div *ngIf="!samplingRecords.length" class="card mt-4">
+                <div class="card-body text-center">
+                    <p class="text-muted">No sampling records found.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

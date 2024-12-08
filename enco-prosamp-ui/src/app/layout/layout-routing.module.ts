@@ -37,8 +37,9 @@ const routes: Routes = [
                 // data: { roles: ['technician'] }, // Accessible only by users with the 'technician' role
             },
             {
-                path: 'charts',
-                loadChildren: () => import('./charts/charts.module').then((m) => m.ChartsModule),
+                path: 'samplingrecords',
+                loadChildren: () => import('./samplingrecords/samplingrecords.module').then((m) => m.SamplingrecordsModule),
+                // data: {roles: ['engineer']},
             },
             {
                 path: 'bs-element',
