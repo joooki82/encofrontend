@@ -46,10 +46,6 @@ const routes: Routes = [
                 loadChildren: () => import('./bs-element/bs-element.module').then((m) => m.BsElementModule),
             },
             {
-                path: 'components',
-                loadChildren: () => import('./bs-component/bs-component.module').then((m) => m.BsComponentModule),
-            },
-            {
                 path: 'blank-page',
                 loadChildren: () => import('./blank-page/blank-page.module').then((m) => m.BlankPageModule),
             },
