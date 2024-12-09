@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "test-ng7": {
+        "enco-prosamp-ui": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -58,6 +58,14 @@
                                     "maximumError": "5mb"
                                 }
                             ]
+                        },
+                        "test": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.test.ts"
+                                }
+                            ]
                         }
                     },
                     "defaultConfiguration": ""
@@ -65,24 +73,27 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "buildTarget": "test-ng7:build"
+                        "buildTarget": "enco-prosamp-ui:build"
                     },
                     "configurations": {
                         "production": {
-                            "buildTarget": "test-ng7:build:production"
+                            "buildTarget": "enco-prosamp-ui:build:production"
+                        },
+                        "test": {
+                            "buildTarget": "enco-prosamp-ui:build:test"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "buildTarget": "test-ng7:build"
+                        "buildTarget": "enco-prosamp-ui:build"
                     }
                 },
                 "e2e": {
                     "builder": "cypress",
                     "options": {
-                        "devServerTarget": "test-ng7:serve"
+                        "devServerTarget": "enco-prosamp-ui:serve"
                     }
                 }
             }
@@ -97,8 +108,5 @@
         "@schematics/angular:directive": {
             "prefix": "app"
         }
-    },
-    "cli": {
-        "analytics": "0ccfd754-79ab-4bf6-b9ef-ef066366d8c7"
     }
 }

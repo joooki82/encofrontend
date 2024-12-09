@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    disableAuth: false, // Add this flag for testing purposes
     apiUrl: 'http://localhost:8081/api',
     keycloak: {
         enable: true,                       // Enable or disable Keycloak for Frontend app

@@ -5,6 +5,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
+        "start:test": "ng serve --configuration=test",
         "build": "ng build --configuration production",
         "gitbuild": "ng build --configuration production --base-href /start-angular/SB-Admin-BS4-Angular-8/master/dist/",
         "test": "ng test",
