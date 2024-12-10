@@ -9,13 +9,4 @@ export const environment = {
         clientId: 'enco-prosamp-angular-ui',
         redirectUri: 'http://localhost:4200' // Frontend app URL for redirects
     }
-    // keycloak: {
-    //     enable: true, //Enable or disable Keycloak for Frontend app
-    //     authority: 'http://localhost:8080', //Keycloak URL
-    //     redirectUri: 'http://localhost:4200', //Frontend app URL
-    //     postLogoutRedirectUri: 'http://localhost:4200/logout', //Optional value
-    //     realm: 'encotech', //Realm name
-    //     clientId: 'enco-prosamp-angular-ui',
-    // },
-
 };

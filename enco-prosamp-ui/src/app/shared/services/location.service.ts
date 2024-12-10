@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { catchError, Observable, tap } from 'rxjs';
 import {LocationOfSampling} from "../../model/locationofsampling/locationofsampling.model";
 import {environment} from "../../../environments/environment";
 
@@ -15,8 +15,18 @@ export class LocationService {
   constructor(private http: HttpClient) {}
 
   getAllLocations(): Observable<LocationOfSampling[]> {
-    return this.http.get<LocationOfSampling[]>(this.apiUrl);
+      console.log('Making API request to /api/locations');
+
+
+      return this.http.get<LocationOfSampling[]>(this.apiUrl).pipe(
+          tap((response) => console.log('API Response:', response)),
+          catchError((error) => {
+              console.error('API Error:', error);
+              throw error;
+          })
+      );
   }
+
 
   saveLocation(location: LocationOfSampling): Observable<LocationOfSampling> {
     return this.http.post<LocationOfSampling>(this.apiUrl, location);
